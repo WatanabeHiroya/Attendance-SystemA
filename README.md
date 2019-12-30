@@ -8,4 +8,4 @@
 * Ruby
 * Rails
 * Git(HTTPSからSSH通信へ変更)
-* テスト
+* test
