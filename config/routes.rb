@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  get '/working_employee_list', to: 'users#working_employee_list'
+  
   resources :users do
     member do
       get 'edit_basic_info'

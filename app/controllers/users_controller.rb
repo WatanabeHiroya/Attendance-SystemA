@@ -59,6 +59,9 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
+  
+  def working_employee_list
+  end
 
 
   private
