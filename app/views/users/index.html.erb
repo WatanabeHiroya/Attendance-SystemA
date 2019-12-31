@@ -1,29 +1,15 @@
 <% provide(:title, 'All Users') %>
 <h1>ユーザー一覧</h1>
 
-
-<div class="col-md-10 col-md-offset-1">
+<%= form_with url: users_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "インポート" %>
+<% end %>
+  
+  
   <%= will_paginate %>
   <table class="table table-condensed table-hover" id="table-users">
     
-
-    <% @users.each do |user| %>
-      <tr>
-        <td>
-          <% if current_user.admin? %>
-            <%= link_to user.name, user %><a> | </a>
-          <% else %>
-            <%= user.name %>
-          <% end %>
-          <% if current_user.admin? && !current_user?(user) %>
-            <%= link_to "基本情報編集 | ", edit_basic_info_user_path(user) %>
-            <%= link_to "削除", user, method: :delete,
-                data: { confirm: "削除してよろしいですか？" } %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
   </table>
   <%= will_paginate %>
-</div>
 

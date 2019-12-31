@@ -7,8 +7,13 @@ class UsersController < ApplicationController
   before_action :admin_or_correct_user, only: [:show]
 
   def index
-    @users = User.paginate(page: params[:page]).search(params[:search])
-
+    @users = User.all
+  end
+  
+  def import
+    # fileはtmpに自動で一時保存される
+    User.import(params[:file])
+    redirect_to users_url
   end
 
   def show
