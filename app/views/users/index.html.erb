@@ -1,7 +1,7 @@
 <% provide(:title, 'All Users') %>
 <h1>ユーザー一覧</h1>
 
-<%= form_with url: users_path, multipart: true do %>
+<%= form_with url: import_users_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "インポート" %>
 <% end %>

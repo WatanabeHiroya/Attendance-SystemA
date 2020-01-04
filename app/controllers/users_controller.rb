@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   def import
     # fileはtmpに自動で一時保存される
     User.import(params[:file])
+    flash[:success] = "CSVインポートに成功しました。"
     redirect_to users_url
   end
 
