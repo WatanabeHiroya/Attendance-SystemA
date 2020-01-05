@@ -1,13 +1,37 @@
 <% provide(:title, 'All Users') %>
 <h1>ユーザー一覧</h1>
 
-<%= form_with url: import_users_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "インポート" %>
+<% if flash[:notice] %>
+  <div class="alert alert-info" role="alert"><%= flash[:notice] %></div>
 <% end %>
-  
-  
+
+<div>
+  <%= form_tag users_path, method: :post, multipart: true do |f| %>
+    <div class="search_item">
+      <%= text_field_tag 'filename',"", id: "filename", disabled: true %>
+      <%= file_field_tag 'users_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
+      <%= button_tag 'ファイル選択', class: %i(btn-primary csv_input_btn), type: 'button', onclick: "$('#file_input').click();" %>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">CSVインポート</button>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  function file_selected(file_field){
+    var filename = $(file_field)[0].files[0].name;
+    $("#filename").val(filename);
+  }
+</script>
+
+
 <table class="table table-condensed table-hover" id="table-users">
-    
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+    </tr>
+  <% end %>
 </table>
 
