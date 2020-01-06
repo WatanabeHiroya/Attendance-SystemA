@@ -22,7 +22,8 @@ class UsersController < ApplicationController
   def create
     if params[:users_file]
       registered_count = import_users
-      redirect_to users_path, notice: "#{registered_count}件登録しました"
+      flash[:success] = "#{registered_count}件登録しました。"
+      redirect_to users_path
     else
       @user = User.new(user_params)
       if @user.save

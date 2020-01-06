@@ -1,9 +1,7 @@
 <% provide(:title, 'All Users') %>
 <h1>ユーザー一覧</h1>
 
-<% if flash[:notice] %>
-  <div class="alert alert-info" role="alert"><%= flash[:notice] %></div>
-<% end %>
+
 
 <div>
   <%= form_tag users_path, method: :post, multipart: true do |f| %>
