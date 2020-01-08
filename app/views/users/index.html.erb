@@ -25,21 +25,23 @@
   
   <div class="row">
     <ul class="users">
-      <li>user.name
-        <div class="panel-group" id="accordion">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">編集</a>
-              </h4>
-            </div>
-            
-            <div id="collapse1" class="panel-collapse collapse in">
-              <div class="panel-body">内容</div>
-            </div>
-           </div>
-        </div>
-      </li>
+      <% @users.each do |user, user.id| %>
+        <li><%= user.name %>
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-title">
+                  <button data-toggle="collapse" data-target="#collapse" class="index-edit_button btn btn-primary btn-lg">編集</button>
+                </div>
+              </div>
+              
+              <div id="collapse" class="panel-collapse collapse">
+                <div class="panel-body">内容</div>
+              </div>
+             </div>
+          </div>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>
