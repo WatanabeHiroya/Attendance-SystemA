@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if params[:users_file]
       registered_count = import_users
       flash[:success] = "#{registered_count}件登録しました。"
-      redirect_to users_path
+      redirect_to users_url
     else
       @user = User.new(user_params)
       if @user.save
@@ -81,17 +81,22 @@ class UsersController < ApplicationController
     end
 
     def import_users
-      # 登録処理前のレコード数
-      current_user_count = ::User.count
-      users = []
-      # windowsで作られたファイルに対応するので、encoding: "SJIS"を付けている
-      CSV.foreach(params[:users_file].path, headers: true, encoding: "SJIS") do |row|
-        users << ::User.new({ name: row["name"], email: row["email"], affiliation: row["affiliation"], employee_number: row["employee_number"], uid: row["uid"], basic_work_time: row["basic_work_time"], designated_work_start_time: row["designated_work_start_time"], designated_work_end_time: row["designated_work_end_time"], superior: row["superior"], admin: row["admin"], password: row["password"]})
-      end
-      # importメソッドでバルクインサートできる
-      ::User.import(users)
-      # 何レコード登録できたかを返す
-      ::User.count - current_user_count
+    # ActiveRecord::Base.transaction do # トランザクション
+        # 登録処理前のレコード数
+        current_user_count = ::User.count
+        users = []
+        # windowsで作られたファイルに対応するので、encoding: "SJIS"を付けている
+        CSV.foreach(params[:users_file].path, headers: true, encoding: "SJIS") do |row|
+          users << ::User.new({ name: row["name"], email: row["email"], affiliation: row["affiliation"], employee_number: row["employee_number"], uid: row["uid"], basic_work_time: row["basic_work_time"], designated_work_start_time: row["designated_work_start_time"], designated_work_end_time: row["designated_work_end_time"], superior: row["superior"], admin: row["admin"], password: row["password"]})
+        end
+        # importメソッドでバルクインサートできる
+        ::User.import(users)
+        # 何レコード登録できたかを返す
+        ::User.count - current_user_count
+    #  end
+    # rescue ActiveRecord::RecordNotUnique # トランザクションにエラー
+    #  flash[:danger] = "無効な入力データがあった為、キャンセルしました。"
+    #  redirect_to users_url
     end
 
 end

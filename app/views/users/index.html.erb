@@ -1,35 +1,46 @@
 <% provide(:title, 'All Users') %>
-<h1>ユーザー一覧</h1>
-
-
-
-<div>
-  <%= form_tag users_path, method: :post, multipart: true do |f| %>
-    <div class="search_item">
-      <%= text_field_tag 'filename',"", id: "filename", disabled: true %>
-      <%= file_field_tag 'users_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
-      <%= button_tag 'ファイル選択', class: %i(btn-primary csv_input_btn), type: 'button', onclick: "$('#file_input').click();" %>
-    </div>
-    <div>
-      <button type="submit" class="btn btn-primary">CSVインポート</button>
-    </div>
-  <% end %>
+<div class="container">
+  <h1>ユーザー一覧</h1>
+  
+  <div>
+    <%= form_tag users_path, method: :post, multipart: true do |f| %>
+      <div class="search_item">
+        <%= text_field_tag 'filename',"", id: "filename", disabled: true %>
+        <%= file_field_tag 'users_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
+        <%= button_tag 'ファイル選択', class: %i(btn-primary csv_input_btn), type: 'button', onclick: "$('#file_input').click();" %>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary">CSVインポート</button>
+      </div>
+    <% end %>
+  </div>
+  
+  <script type="text/javascript">
+    function file_selected(file_field){
+      var filename = $(file_field)[0].files[0].name;
+      $("#filename").val(filename);
+    }
+  </script>
+  
+  
+  <div class="row">
+    <ul class="users">
+      <li>user.name
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">編集</a>
+              </h4>
+            </div>
+            
+            <div id="collapse1" class="panel-collapse collapse in">
+              <div class="panel-body">内容</div>
+            </div>
+           </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
-
-<script type="text/javascript">
-  function file_selected(file_field){
-    var filename = $(file_field)[0].files[0].name;
-    $("#filename").val(filename);
-  }
-</script>
-
-
-<table class="table table-condensed table-hover" id="table-users">
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.name %></td>
-      <td><%= user.email %></td>
-    </tr>
-  <% end %>
-</table>
 
