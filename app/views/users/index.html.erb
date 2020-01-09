@@ -1,4 +1,6 @@
 <% provide(:title, 'All Users') %>
+<% provide(:class_text, 'edit-details') %>
+
 <div class="container">
   <h1>ユーザー一覧</h1>
   
@@ -25,18 +27,27 @@
   
   <div class="row">
     <ul class="users">
-      <% @users.each do |user, user.id| %>
+      <% @users.each do |user| %>
         <li><%= user.name %>
+        <li>
+          <%= link_to "削除", user, method: :delete,
+              data: { confirm: "削除してよろしいですか？" },
+              class: "btn btn-primary" %>
+        </li>
           <div class="panel-group" id="accordion">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <div class="panel-title">
-                  <button data-toggle="collapse" data-target="#collapse" class="index-edit_button btn btn-primary btn-lg">編集</button>
+                  <button data-toggle="collapse" data-target="#collapse<%= user.id %>" class="index-edit_button btn btn-primary btn-lg">編集</button>
                 </div>
               </div>
               
-              <div id="collapse" class="panel-collapse collapse">
-                <div class="panel-body">内容</div>
+              <div id="collapse<%= user.id %>" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-6 col-md-offset-3">
+                    <%= render 'form_details' %>
+                  </div>
+                </div>
               </div>
              </div>
           </div>
