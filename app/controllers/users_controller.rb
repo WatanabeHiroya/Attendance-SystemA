@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index]
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info]
   before_action :set_one_month, only: :show
   before_action :admin_or_correct_user, only: [:show]
 
@@ -47,6 +47,15 @@ class UsersController < ApplicationController
       render :edit      
     end
   end
+  
+  def update_user_info
+    if @user.update_attributes(user_info_params)
+      flash[:success] = "ユーザー情報を編集しました。"
+      redirect_to users_url
+    else
+      render :index
+    end
+  end
 
   def destroy
     @user.destroy
@@ -78,6 +87,10 @@ class UsersController < ApplicationController
 
     def basic_info_params
       params.require(:user).permit(:basic_work_time, :work_time)
+    end
+    
+    def user_info_params
+      params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :password_confirmation, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
 
     def import_users
