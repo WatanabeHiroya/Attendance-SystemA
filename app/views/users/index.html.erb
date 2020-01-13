@@ -1,10 +1,8 @@
 <% provide(:title, 'All Users') %>
 <% provide(:class_text, 'edit-details') %>
 
-
 <div class="container">
   <h1>ユーザー一覧</h1>
-  
   <div>
     <%= form_tag users_path, method: :post, multipart: true do |f| %>
       <div class="search_item">
@@ -25,12 +23,12 @@
     }
   </script>
   
-  
   <div class="row">
-    <ul class="users">
+    <%= will_paginate %>
+    <ul class="users-list">
       <% @users.each do |user| %>
         <li><%= user.name %>
-        <li>
+        <li>|
           <%= link_to "削除", user, method: :delete,
               data: { confirm: "削除してよろしいですか？" },
               class: "btn btn-primary" %>
@@ -55,6 +53,7 @@
         </li>
       <% end %>
     </ul>
+  <%= will_paginate %>
   </div>
 </div>
 
