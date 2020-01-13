@@ -75,7 +75,9 @@ class UsersController < ApplicationController
   end
   
   def working_employee_list
-    @users = Attendance.where(started_at: ":").where(finished_at: nil)
+    @users = Attendance.where.not(started_at: nil).where(finished_at: nil) # @usersにはattendanceモデルの情報のみがある
+    @users2 = User.where(id: @users.user_id) # 配列処理必須
+    
   end
 
 
