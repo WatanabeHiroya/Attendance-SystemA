@@ -1,7 +1,7 @@
-<%= provide(:title, "出勤社員一覧") %>
+<%= provide(:title, "出勤中社員一覧") %>
 
 <div class="container">
-  <h1>出勤社員一覧</h1>
+  <h1>出勤中社員一覧</h1>
   <table class="table-bordered table-striped table-condensed working_employee_list">
     <thead>
       <tr>
@@ -11,10 +11,14 @@
     </thead>
     
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-      </tr>
+      <% if @users %>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= user.employee_number %></td>
+          <td><%= user.name %></td>
+        </tr>
+        <% end %>
+      <% end %>
     </tbody>
   </table>
 </div>

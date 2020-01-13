@@ -75,6 +75,7 @@ class UsersController < ApplicationController
   end
   
   def working_employee_list
+    @users = Attendance.where(started_at: ":").where(finished_at: nil)
   end
 
 
