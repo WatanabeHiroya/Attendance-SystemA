@@ -11,14 +11,14 @@
     </thead>
     
     <tbody>
-      <% if @users2 %>
-        <% @users2.each do |user| %>
+      <% if @users %> 
+        <% @users.each do |user| %>
         <tr>
           <td><%= user.employee_number %></td>
           <td><%= user.name %></td>
         </tr>
         <% end %>
-      <% end %>
+      <% end %> 
     </tbody>
   </table>
 </div>
