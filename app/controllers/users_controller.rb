@@ -75,11 +75,7 @@ class UsersController < ApplicationController
   end
   
   def working_employee_list
-    @attendances = Attendance.where.not(started_at: nil).where(finished_at: nil)
-    @attendances.each do |attendance|
-    @users = User.where(id: attendance.user_id)
-    @users.push(@users)
-    end
+    @users = User.all.includes(:attendances)
   end
 
 
