@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'bases/show'
+
   root 'static_pages#top'
   get '/signup', to: 'users#new'
 
@@ -8,6 +10,10 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   get '/working_employee_list', to: 'users#working_employee_list'
+  get '/bases', to: 'bases#show'
+  get '/bases/:id/edit', to: 'bases#edit'
+  delete '/bases/:id/delete', to: 'bases#destroy'
+
   
   resources :users do
     member do
