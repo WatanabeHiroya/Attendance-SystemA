@@ -1,10 +1,16 @@
 class BasesController < ApplicationController
-  def show
+  
+  def index
     @bases = Base.all
   end
   
+  def edit
+  end
+  
+  def update
+  end
+  
   def destroy
-    
   end
   
   def new
