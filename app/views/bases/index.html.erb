@@ -8,20 +8,20 @@
         <tr>
           <th></th>
           <th></th>
-          <th>拠点番号</th>
-          <th>拠点名</th>
-          <th>勤怠種類</th>
+          <th class="base-item">拠点番号</th>
+          <th class="base-item">拠点名</th>
+          <th class="base-item">勤怠種類</th>
         </tr>
         <% @bases.each do |base| %>
           <tr>
-              <td><%= link_to "修正", edit_basis_path(base), class: "btn btn-md btn-primary" %></td>
-              <td><%= link_to "削除", basis_path(base), method: :delete,
+              <td class="base-item"><%= link_to "修正", edit_basis_path(base), class: "btn btn-md btn-primary" %></td>
+              <td class="base-item"><%= link_to "削除", basis_path(base), method: :delete,
                       data: { confirm: "削除してよろしいですか？" },
                       class: "btn btn-md btn-primary" %>
               </td>
-              <td><%= base.base_number %></td>
-              <td><%= base.base_name %></td>
-              <td><%= base.attendance_type %></td>
+              <td class="base-item"><%= base.base_number %></td>
+              <td class="base-item"><%= base.base_name %></td>
+              <td class="base-item"><%= base.attendance_type %></td>
           </tr>
         <% end %>
       </tbody>
