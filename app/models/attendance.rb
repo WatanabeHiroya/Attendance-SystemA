@@ -1,6 +1,8 @@
 class Attendance < ApplicationRecord
   belongs_to :user
   
+  attr_accessor :next_day_flag
+  
   validates :worked_on, presence: true
   validates :note, length: { maximum: 50 }
   
