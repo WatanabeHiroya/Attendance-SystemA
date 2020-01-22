@@ -11,10 +11,16 @@ module AttendancesHelper
   end
   
   
-  # 出勤時間と退勤時間を受け取り、在社時間を計算して返します。
+  # 出勤時間と退勤時間を受け取り、在社時間を計算して返します。(viewから呼び出し)
   def working_times(start, finish)
-    format("%.2f", (((finish - start) / 60) /60.0))
+    if start < finish
+      format("%.2f", (((finish - start) / 60) /60.0))
+    else start > finish
+       format("%.2f", (((24*60*60 - start + finish) / 60) /60.0))
+    end
   end
+  
+  
 
   # 出社時間、退社時間のどちらか一方が空の時、falseを返す。  
   def attendances_invalid?
