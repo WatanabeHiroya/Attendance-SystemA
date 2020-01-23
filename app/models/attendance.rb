@@ -17,7 +17,7 @@ class Attendance < ApplicationRecord
   
   def started_at_than_finished_at_fast_if_invalid 
     if started_at.present? && finished_at.present? # もし出勤時間と退勤時間が存在するならば
-      unless next_day_flag == 1 # 翌日チェックない時
+      unless next_day_flag == "1" # 翌日チェックない時
       errors.add(:started_at, "より早い退勤時間は無効です") if started_at > finished_at # 出勤時間が退勤時間より遅い時
       end
     end
