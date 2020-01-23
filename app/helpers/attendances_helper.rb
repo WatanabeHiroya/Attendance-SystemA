@@ -1,4 +1,5 @@
 module AttendancesHelper
+  require 'active_support/time'
 
   def attendance_state(attendance)
     # 受け取ったAttendanceオブジェクトが当日と一致するか評価します。
@@ -16,7 +17,7 @@ module AttendancesHelper
     if start < finish
       format("%.2f", (((finish - start) / 60) /60.0))
     else start > finish
-      format("%.2f", (((24:00:00 - start + finish) / 60) /60.0))
+      format("%.2f", (((start - finish) / 60) /60.0))
     end
   end
   
