@@ -37,7 +37,7 @@ class AttendancesController < ApplicationController
       if attendances_invalid? # 出社時間、退社時間のどちらか一方が空の時、falseを返す。
         attendances_params.each do |id, item|
           attendance = Attendance.find(id)
-          attendance.update_attributes!(item) # ここでモデルに行き、エラーが起きてる？
+          attendance.update_attributes!(item)
         end
         flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
         redirect_to user_url(date: params[:date])

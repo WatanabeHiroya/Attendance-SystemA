@@ -31,7 +31,7 @@
                 <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
               <% end %>
               <td>
-                <%= attendance.check_box :next_day_flag %>
+                <%= attendance.check_box :next_day_flag, class: "form-control" %>
               </td>
               <td>
                 <% if day.started_at.present? && day.finished_at.present? %>
