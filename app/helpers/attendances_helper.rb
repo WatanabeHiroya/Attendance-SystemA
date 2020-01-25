@@ -12,15 +12,14 @@ module AttendancesHelper
   end
   
   
-  # 出勤時間と退勤時間を受け取り、在社時間を計算して返します。(viewから呼び出し)
-  def working_times(start, finish)
-    if params[:next_day_flag] == "1"
-      format("%.2f", (((finish - start) / 60) /60.0) + 24)
-    else
+  # 出勤時間と退勤時間を受け取り、在社時間を計算
+  def working_times(start, finish, next_day_flag)
+    if next_day_flag == "0" 
       format("%.2f", (((finish - start) / 60) /60.0))
+    else
+      format("%.2f", (((finish - start) / 60) /60.0) + 24)
     end
-  end
-  
+  end 
   
 
   # 出社時間、退社時間のどちらか一方が空の時、falseを返す。  
