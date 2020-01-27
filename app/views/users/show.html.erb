@@ -36,12 +36,25 @@
     <table class="table table-bordered table-condensed table-hover" id="table-attendances">
       <thead>
         <tr>
-          <th rowspan="2">日付</th>
-          <th rowspan="2">曜日</th>
+          <th rowspan="3">残業申請</th>
+          <th rowspan="3">日付</th>
+          <th rowspan="3">曜日</th>
+          <th colspan="8">【実績】</th>
+          <th colspan="5">所定外勤務</th>
+        </tr>
+        <tr>
+          <!-- 上のセルと結合して消えるセル -->
+          <!-- 上のセルと結合して消えるセル -->
           <th colspan="3">出社</th>
           <th colspan="3">退社</th>
           <th rowspan="2">在社時間</th>
           <th rowspan="2">備考</th>
+          <th colspan="2">終了予定時間</th>
+          <th rowspan="2">時間外時間</th>
+          <th rowspan="2">業務処置内容</th>
+          <th rowspan="2">指示者確認㊞</th>
+          <!-- 上のセルと結合して消えるセル -->
+          <!-- 上のセルと結合して消えるセル -->
         </tr>
         <tr>
           <!-- 上のセルと結合して消えるセル -->
@@ -51,15 +64,16 @@
           <th></th>
           <th>時</th>
           <th>分</th>
-          <th></th>
-          <!-- 上のセルと結合して消えるセル -->
-          <!-- 上のセルと結合して消えるセル -->
+          <th></th>  
+          <th>時</th>
+          <th>分</th>
         </tr>
       </thead>
   
       <tbody>
         <% @attendances.each do |day| %>
           <tr>
+            <td></td>
             <td><%= l(day.worked_on, format: :short) %></td>
             <td class="days_color-<%= "#{day.worked_on.wday}" %>">
               <%= $days_of_the_week[day.worked_on.wday] %>
@@ -91,6 +105,11 @@
               <% end %>
             </td>
             <td><%= day.note %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         <% end %>
       </tbody>
@@ -98,15 +117,27 @@
       <tfoot>
         <!--rowspan:縦結合、colspan：横結合-->
         <tr>
-          <td colspan="2">総合勤務時間</td>
-          <td colspan="6"></td>
+          <td colspan="2">累計日数</td>
+          <td colspan="6">総合勤務時間</td>
           <td>累計在社時間</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
           <td></td>
         </tr>
         <tr>
           <td colspan="2"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
           <td colspan="6"></td>
           <td><%= format("%.2f", @total_working_times.to_f) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
           <td></td>
         </tr>
       </tfoot>    
