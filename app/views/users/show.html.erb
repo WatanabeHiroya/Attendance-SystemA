@@ -30,8 +30,11 @@
   <div>【残業申請のお知らせ】</div>
   <div class="btn-users-show">
     <%= link_to "勤怠の編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
+    <%= link_to "CSV出力", '#', class: "btn btn-primary" %>
   </div>
-  
+
+  <td><%= link_to "勤怠修正ログ（承認済み）", '#', class: "btn btn-primary" %></td>
+
   <div>
     <table class="table table-bordered table-condensed table-hover" id="table-attendances">
       <thead>
@@ -118,11 +121,18 @@
           <td rowspan="2"></td>
           <td rowspan="2"></td>
           <td rowspan="2"></td>
-          <td rowspan="2">所属長承認: 申請中</td>
+          <td rowspan="2">所属長承認: 申請中</br>
+            <select class="custom-select custom-select-sm">
+              <option selected></option>
+              <option value="1">上長1</option>
+              <option value="2">上長2</option>
+            </select></br>
+            <%= link_to "申請", '#', class: "btn btn-primary" %>
+          </td>
         </tr>
         <tr>
-          <td colspan="3"><%= format_basic_day_info(@user.work_time).to_f * @worked_sum %></td>
-          <td colspan="6"></td>
+          <td colspan="3"><%= @attendances.count %></td>
+          <td colspan="6"><%= @worked_sum*7.5 %></td>
           <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
         </tr>
       </tfoot>    
