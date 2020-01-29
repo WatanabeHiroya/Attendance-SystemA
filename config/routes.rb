@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+
   get '/working_employee_list', to: 'users#working_employee_list'
   
   resources :users do
@@ -15,7 +16,6 @@ Rails.application.routes.draw do
       get 'edit_basic_info'
       patch 'update_user_info'
       patch 'update_basic_info'
-      get 'attendances/index'
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
     end
