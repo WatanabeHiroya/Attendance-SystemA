@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get 'edit_basic_info'
       patch 'update_user_info'
       patch 'update_basic_info'
+      get 'attendances/index'
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
     end
