@@ -28,7 +28,9 @@
                 <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
               <% else %>
                 <td><%= attendance.time_field :started_at, class: "form-control" %></td>
+                    <%= attendance.hidden_field :second_start_time, value: day.started_at %>
                 <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
+                    <%= attendance.hidden_field :second_end_time, value: day.finished_at %>
               <% end %>
               <!-- 翌日のチェックボックスの表示  -->
               <td>

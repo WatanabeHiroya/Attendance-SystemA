@@ -26,10 +26,15 @@ class UsersController < ApplicationController
       csv << header
       
       attendances.each do |attendance|
-        work = attendance.worked_on
-        start = attendance.started_at
-        finish = attendance.finished_at
-        values = [work, start, finish]
+        values = [
+          attendance.worked_on,
+          if attendance.started_at.present?
+           attendance.started_at.strftime("%R")
+          end,
+          if attendance.finished_at.present?
+           attendance.finished_at.strftime("%R") 
+          end
+          ]
         csv << values
       end
     end
