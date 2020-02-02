@@ -29,6 +29,9 @@ class AttendancesController < ApplicationController
   end
 
   def edit_one_month
+    @attendances.each do |attendance|
+      attendance.update_attributes(first_start_time: attendance.started_at, first_end_time: attendance.finished_at)
+    end
   end
 
   def update_one_month
@@ -37,6 +40,7 @@ class AttendancesController < ApplicationController
         attendances_params.each do |id, item|
           attendance = Attendance.find(id)
           attendance.update_attributes!(item)
+          attendance.update_attributes!(second_start_time: attendance.started_at, second_end_time: attendance.finished_at)
         end
         flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
         redirect_to user_url(date: params[:date])
@@ -58,6 +62,6 @@ class AttendancesController < ApplicationController
 
     # 1ヶ月分の勤怠情報を扱います。
     def attendances_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :second_start_time, :second_end_time, :next_day_flag])[:attendances]
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :first_start_time, :first_end_time, :second_start_time, :second_end_time, :next_day_flag])[:attendances]
     end
 end

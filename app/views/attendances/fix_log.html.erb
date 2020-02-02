@@ -15,16 +15,20 @@
         <th>承認日</th>
       </tr>
       
-      <tr>
-        <td><%= @user.name %></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+      <% @attendances.each do |attendance| %>
+        <% if attendance.second_start_time.present? || attendance.second_end_time.present? %>
+          <tr>
+            <td><%= attendance.worked_on %></td>
+            <td></td>
+            <td><%= attendance.first_start_time %></td>
+            <td><%= attendance.first_end_time %></td>
+            <td><%= attendance.second_start_time %></td>
+            <td><%= attendance.second_end_time %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
+      <% end %>
     </table>
   </div>
 </div>
