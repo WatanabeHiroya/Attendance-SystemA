@@ -28,11 +28,7 @@
                 <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
               <% else %>
                 <td><%= attendance.time_field :started_at, class: "form-control" %></td>
-                    <!-- 変更後の出社時間を送信 -->
-                    
                 <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
-                    <!-- 変更後の退社時間を送信 -->
-                    
               <% end %>
               <!-- 翌日のチェックボックスの表示  -->
               <td>

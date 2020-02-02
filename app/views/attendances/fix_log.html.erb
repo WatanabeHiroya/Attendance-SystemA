@@ -6,7 +6,6 @@
     <table class="table table-bordered table-condensed fix-log">
       <tr>
         <th>日付</th>
-        <th>曜日</th>
         <th>変更前出社時間</th>
         <th>変更前退社時間</th>
         <th>変更後出社</th>
@@ -19,11 +18,26 @@
         <% if attendance.second_start_time.present? || attendance.second_end_time.present? %>
           <tr>
             <td><%= attendance.worked_on %></td>
-            <td></td>
-            <td><%= attendance.first_start_time %></td>
-            <td><%= attendance.first_end_time %></td>
-            <td><%= attendance.second_start_time %></td>
-            <td><%= attendance.second_end_time %></td>
+            <% if attendance.first_start_time.present? %>
+              <td><%= attendance.first_start_time.strftime("%R") %></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <% if attendance.first_end_time.present? %>
+              <td><%= attendance.first_end_time.strftime("%R") %></td>
+            <% else %>
+              <td></td>              
+            <% end %>
+            <% if attendance.second_start_time.present? %>
+              <td><%= attendance.second_start_time.strftime("%R") %></td>
+            <% else %>
+              <td></td>              
+            <% end %>
+            <% if attendance.second_end_time.present? %>
+              <td><%= attendance.second_end_time.strftime("%R") %></td>
+            <% else %>
+              <td></td>              
+            <% end %>
             <td></td>
             <td></td>
           </tr>

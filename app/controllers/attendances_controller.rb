@@ -56,6 +56,7 @@ class AttendancesController < ApplicationController
   
   def fix_log
     # 変更した勤怠情報のみを取得
+    
   end
 
   private
