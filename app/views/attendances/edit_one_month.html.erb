@@ -42,11 +42,7 @@
               </td>
               <td><%= attendance.text_field :note, class: "form-control" %></td>
               <td>
-                <select class="custom-select custom-select-sm">
-                  <option selected></option>
-                  <option value="1">上長1</option>
-                  <option value="2">上長2</option>
-                </select>
+                <%= attendance.select :instruction, ['上長1', '上長2'], {include_blank: ''}, class: 'sample' %>
               </td>
             </tr>
           <% end %>
