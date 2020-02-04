@@ -106,7 +106,17 @@
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
+            <% if day.instruction.present? %>
+              <% if day.status.nil? %>
+                <td><%= day.instruction %>勤怠編集申請中</td>
+              <% elsif day.status == "1" %>
+                <td>勤怠編集承認</td>
+                <% else %>
+                <td>勤怠編集否認</td>
+              <% end %>
+            <% else %>
+              <td></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
