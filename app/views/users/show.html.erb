@@ -28,30 +28,52 @@
   <div>【所属長承認申請のお知らせ】</div>
 
 
-  <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#flame">【勤怠変更申請のお知らせ】</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">【勤怠変更申請のお知らせ】</button>
   <!-- モーダル:モーダルの枠部分 -->
   <!-- idとトリガーと紐付け。 fadeでモーダルをフェードインさせます。 -->
-  <div id="flame" class="modal fade" role="dialog">
-    <table class="table table-bordered table-condensed" id="table-attendances">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      
-        <p>【superior2からの勤怠申請】</p>
-        <tr>
-          <th>日付</th>
-          <th>曜日</th>
-          <th>変更前</th>
-          <th>変更後</th>
-          <th>備考</th>
-          <th>指示者確認㊞</th>
-          <th>変更</th>
-          <th>勤怠を確認する</th>
-        </tr>
-        <tr></tr>
-      </table>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">変更を送信する</button>
+  <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-center" role="document">
+      <!-- モーダルの内容 -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="center">【superior2からの勤怠申請】</p>
+          <table class="table table-bordered table-condensed">
+            <tr>
+              <th rowspan="3">日付</th>
+              <th rowspan="3">曜日</th>
+              <th colspan="4">変更前</th>
+              <th colspan="4">変更後</th>
+              <th rowspan="3">備考</th>
+              <th rowspan="3">指示者確認㊞</th>
+              <th rowspan="3">変更</th>
+              <th rowspan="3">勤怠を確認する</th>
+            </tr>
+            <tr>
+              <th colspan="2">出社</th>
+              <th colspan="2">退社</th>
+              <th colspan="2">出社</th>
+              <th colspan="2">退社</th>
+            </tr>
+            <tr>
+              <th>時</th>
+              <th>分</th>
+              <th>時</th>
+              <th>分</th>
+              <th>時</th>
+              <th>分</th>
+              <th>時</th>
+              <th>分</th>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">変更を送信する</button>
+        </div>
       </div>
-    
+    </div>
   </div>
 
   
