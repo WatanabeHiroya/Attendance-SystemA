@@ -18,6 +18,16 @@ class UsersController < ApplicationController
       end
     end
     @worked_sum = @attendances.where.not(started_at: nil).count
+    
+    # 勤怠変更申請のお知らせモーダル
+    @change_attendances = Attendance.where(instruction: "上長1")
+    
+    @change_users = []
+    @change_attendances.each do |ca|
+      @change_users = User.find_by(id: ca.user_id)
+    end
+  
+   
   end
   
   def send_attendances_csv(attendances)
