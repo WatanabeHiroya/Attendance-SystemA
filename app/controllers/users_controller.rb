@@ -21,11 +21,11 @@ class UsersController < ApplicationController
     
     # 勤怠変更申請のお知らせモーダル
     @change_attendances = Attendance.where(instruction: "上長1")
-    
     @change_users = []
-    @change_attendances.each do |ca|
-      @change_users = User.find_by(id: ca.user_id)
+    @change_attendances.each do |change_attendance|
+       @change_users.push(User.where(id: change_attendance.user_id))
     end
+ # 3人分のオブジェクトは取得できているが、カラムの呼び出しがうまくいかない。取得の仕方が間違っているのでは？
   
    
   end

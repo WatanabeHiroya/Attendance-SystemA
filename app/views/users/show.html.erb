@@ -92,6 +92,10 @@
       </div>
     </div>
   </div>
+  
+  <% @change_users.each do |change_user| %>
+    <tr><%= change_user.name %></tr>
+  <% end %>
 
   
   <div>【残業申請のお知らせ】</div>
