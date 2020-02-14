@@ -20,13 +20,12 @@ class UsersController < ApplicationController
     @worked_sum = @attendances.where.not(started_at: nil).count
     
     # 勤怠変更申請のお知らせモーダル
-    @change_attendances = Attendance.where(instruction: "上長1")
+    @change_attendances = Attendance.where(instruction: "上長1") 
     @change_users = []
     @change_attendances.each do |change_attendance|
-       @change_users.push(User.where(id: change_attendance.user_id))
+      @change_users.push(User.find_by(id: change_attendance.user_id)) 
     end
- # 3人分のオブジェクトは取得できているが、カラムの呼び出しがうまくいかない。取得の仕方が間違っているのでは？
-  
+
    
   end
   
