@@ -25,7 +25,6 @@ class UsersController < ApplicationController
     @change_attendances.each do |change_attendance|
       @change_users.push(User.find_by(id: change_attendance.user_id)) 
     end
-
    
   end
   
