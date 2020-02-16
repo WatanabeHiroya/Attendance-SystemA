@@ -104,9 +104,9 @@
                     <td></td>
                 <% end %>
                 <td><%= change_attendance.note %></td>
-                <td>指示者確認</td>
-                <td>変更</td>
-                <td>勤怠を確認する</td>
+                <td><%= change_attendance.select :status, ['なし', '申請中', '承認', '否認'], class: 'sample' %></td>
+                <td><%= change_attendance.check_box %></td>
+                <td><%= link_to "確認", user_path(date: @first_day), class: "btn btn-lg btn-default" %></td>
               </tr>
               <% end %>
               <% end %>
