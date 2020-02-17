@@ -54,6 +54,9 @@ class AttendancesController < ApplicationController
       redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+  def approve_attendances
+  end
+  
   def fix_log
     # 変更した勤怠情報のみを取得
     
