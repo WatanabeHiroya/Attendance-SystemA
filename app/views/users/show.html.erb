@@ -33,7 +33,7 @@
   <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-center" role="document">
       <!-- モーダルの内容 -->
-      <%= form_with(model: @user, url: attendances_approve_attendances_user_path, local: true, method: :patch) do |f| %>
+      <%= form_with(model: @users, url: attendances_approve_attendances_user_path, local: true, method: :patch) do |f| %>
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -105,7 +105,7 @@
                     <% end %>
                     <td><%= change_attendance.note %></td>
                     <td><%= f.select :status, ['なし', '申請中', '承認', '否認'], {include_blank: ''}, class: 'sample' %></td>
-                    <td><%= f.check_box , :accept %></td>
+                    <td><%= f.check_box :change_flag, :accept %></td>
                     <td><%= link_to "確認", user_path(date: @first_day), class: "btn btn-lg btn-default" %></td>
                   </tr>
                   <% end %>
