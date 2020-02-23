@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info]
   before_action :set_one_month, only: :show
   before_action :admin_or_correct_user, only: [:show, :edit, :update]
+  before_action :configure_sign_up_params, only: []
 
   def index
     @users = User.paginate(page: params[:page], per_page: 10)
@@ -112,6 +113,7 @@ class UsersController < ApplicationController
   def working_employee_list
     @users = User.all.includes(:attendances)
   end
+  
 
 
   private
