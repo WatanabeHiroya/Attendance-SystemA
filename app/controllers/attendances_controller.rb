@@ -55,11 +55,13 @@ class AttendancesController < ApplicationController
   end
   
   def approve_attendances
+    
+    
+    redirect_to root_url
   end
   
   def fix_log
     # 変更した勤怠情報のみを取得
-    
   end
 
   private

@@ -114,7 +114,7 @@
             <% end %>
             </div>
           <div class="modal-footer">
-            <td><%= link_to "変更を送信する", attendances_approve_attendances_user_path(@user, change_attendance), class: "btn btn-lg btn-primary" %></td>
+            <td><%= f.submit "変更を送信する", class: "btn btn-lg btn-primary" %></td>
           </div>
         </div>
       <% end %>
