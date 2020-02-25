@@ -41,6 +41,10 @@ class AttendancesController < ApplicationController
           attendance = Attendance.find(id)
           attendance.update_attributes!(item)
           attendance.update_attributes!(second_start_time: attendance.started_at, second_end_time: attendance.finished_at)
+          # 指示者を選択した勤怠情報のみ、statusを申請中に更新
+          unless attendance.instruction == "" 
+            attendance.update_attributes!(status: "申請中")
+          end
         end
         flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
         redirect_to user_url(date: params[:date])
