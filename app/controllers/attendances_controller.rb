@@ -59,9 +59,11 @@ class AttendancesController < ApplicationController
   end
   
   def approve_attendances
-    
-    
-    redirect_to root_url
+    approve_attendances_params.each do |id, status|
+      attendance = Attendance.find(id)
+      attendance.update_attributes(status)
+    end
+    redirect_to user_url
   end
   
   def fix_log
@@ -73,5 +75,9 @@ class AttendancesController < ApplicationController
     # 1ヶ月分の勤怠情報を扱います。
     def attendances_params
       params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :first_start_time, :first_end_time, :second_start_time, :second_end_time, :next_day_flag, :instruction])[:attendances]
+    end
+    
+    def approve_attendances_params
+      params.require(:user).permit(attendances: :status)
     end
 end
