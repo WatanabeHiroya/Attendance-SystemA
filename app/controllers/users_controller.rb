@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     @change_attendances.each do |change_attendance|
       @change_users.push(User.find_by(id: change_attendance.user_id))
     end
-   @change_users = @change_users.uniq
+    @change_users = @change_users.uniq #配列の重複をなくす
   end
   
   def send_attendances_csv(attendances)
