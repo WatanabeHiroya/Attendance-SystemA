@@ -68,44 +68,46 @@
                 </tr>
                 <% @change_attendances.each do |change_attendance| %>
                   <% if change_user.id == change_attendance.user_id %>
-                  <tr>
-                    <td><%= l(change_attendance.worked_on, format: :short) %></td>
-                    <td class="days_color-<%= "#{change_attendance.worked_on.wday}" %>">
-                      <%= $days_of_the_week[change_attendance.worked_on.wday] %>
-                    </td>
-                      <% if change_attendance.first_start_time.present? %>
-                        <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :hour) %></td>
-                        <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :minute) %></td>
-                      <% else %>
-                        <td></td>
-                        <td></td>
-                      <% end %>
-                    <% if change_attendance.first_end_time.present? %>
-                        <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :hour) %></td>
-                        <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :minute) %></td>
-                    <% else %>
-                        <td></td>
-                        <td></td>
+                    <%= fields_for "attendances[]", change_attendance do |af| %>
+                      <tr>
+                        <td><%= l(change_attendance.worked_on, format: :short) %></td>
+                        <td class="days_color-<%= "#{change_attendance.worked_on.wday}" %>">
+                          <%= $days_of_the_week[change_attendance.worked_on.wday] %>
+                        </td>
+                          <% if change_attendance.first_start_time.present? %>
+                            <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :hour) %></td>
+                            <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :minute) %></td>
+                          <% else %>
+                            <td></td>
+                            <td></td>
+                          <% end %>
+                        <% if change_attendance.first_end_time.present? %>
+                            <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :hour) %></td>
+                            <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :minute) %></td>
+                        <% else %>
+                            <td></td>
+                            <td></td>
+                        <% end %>
+                        <% if change_attendance.second_start_time.present? %>
+                            <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :hour) %></td>
+                            <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :minute) %></td>
+                        <% else %>
+                            <td></td>
+                            <td></td>
+                        <% end %>
+                        <% if change_attendance.second_end_time.present? %>
+                            <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :hour) %></td>
+                            <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :minute) %></td>
+                        <% else %>
+                            <td></td>
+                            <td></td>
+                        <% end %>
+                        <td><%= change_attendance.note %></td>
+                        <td><%= af.select :status, ['なし', '申請中', '承認', '否認'], {include_blank: false, selected: '申請中' }, class: 'sample' %></td>
+                        <td><%= af.check_box :change_check_box ,{:checked => false}, "true", "false" %></td>
+                        <td><%= link_to "確認", user_path(date: @first_day), class: "btn btn-lg btn-primary" %></td>
+                      </tr>
                     <% end %>
-                    <% if change_attendance.second_start_time.present? %>
-                        <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :hour) %></td>
-                        <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :minute) %></td>
-                    <% else %>
-                        <td></td>
-                        <td></td>
-                    <% end %>
-                    <% if change_attendance.second_end_time.present? %>
-                        <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :hour) %></td>
-                        <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :minute) %></td>
-                    <% else %>
-                        <td></td>
-                        <td></td>
-                    <% end %>
-                    <td><%= change_attendance.note %></td>
-                    <td><%= f.select :status, ['なし', '申請中', '承認', '否認'], {include_blank: false, selected: '申請中' }, class: 'sample' %></td>
-                    <td><%= f.check_box :checkbox_example, :as => :boolean, checked:false %></td>
-                    <td><%= link_to "確認", user_path(date: @first_day), class: "btn btn-lg btn-default" %></td>
-                  </tr>
                   <% end %>
                 <% end %>
               </table>
@@ -200,13 +202,7 @@
             <td></td>
             <td></td>
             <% if day.instruction.present? %>
-              <% if day.status.nil? %>
-                <td><%= day.instruction %>勤怠編集申請中</td>
-              <% elsif day.status == "1" %>
-                <td>勤怠編集承認</td>
-                <% else %>
-                <td>勤怠編集否認</td>
-              <% end %>
+                <td><%= day.instruction %>勤怠編集<%= day.status %></td>
             <% else %>
               <td></td>
             <% end %>

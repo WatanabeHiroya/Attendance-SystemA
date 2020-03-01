@@ -59,7 +59,8 @@ class AttendancesController < ApplicationController
   end
   
   def approve_attendances
-    approve_attendances_params.each do |user_id, status|
+    
+    approve_attendances_params.each do |id, status|
       attendance = Attendance.find(id)
       attendance.update_attributes(status)
     end
@@ -78,6 +79,7 @@ class AttendancesController < ApplicationController
     end
     
     def approve_attendances_params
-      params.permit(attendances: [:user_id, :status])
+    # require(:attendance)は必要ない？
+      params.permit(attendances: [:id, :status])[:attendances]
     end
 end
