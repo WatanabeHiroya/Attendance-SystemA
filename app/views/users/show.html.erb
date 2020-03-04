@@ -4,9 +4,14 @@
   <div>
     <table class="table table-bordered table-condensed user-table">
       <tr>
-        <td><%= link_to "←", user_path(date: @first_day.prev_month), class: "btn btn-primary" %>&emsp;
+        <td>
+          <% if current_user?(@user) %>
+            <%= link_to "←", user_path(date: @first_day.prev_month), class: "btn btn-primary" %>
+          <% end %>
             <%= l(@first_day, format: :middle) %>時間管理表&emsp;
+          <% if current_user?(@user) %>
             <%= link_to "→", user_path(date: @first_day.next_month), class: "btn btn-primary" %>
+          <% end %>
         </td>
         <td>指定勤務開始時間 <%= format_basic_info(@user.designated_work_start_time) %>
           <br>指定勤務終了時間 <%= format_basic_info(@user.designated_work_end_time)%>
@@ -25,111 +30,110 @@
       </tr>
     </table>
   </div>
-  <div>【所属長承認申請のお知らせ】</div>
-
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">【勤怠変更申請のお知らせ】</button>
-  <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-center" role="document">
-      <!-- モーダルの内容 -->
-      <%= form_with(model: @users, url: attendances_approve_attendances_user_path, local: true, method: :patch) do |f| %>
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <div class="modal-body">
-            <% @change_users.each do |change_user| %>
-              <p class="center">【<%= change_user.name%>からの勤怠変更申請】</p>
-              <table class="table table-bordered table-condensed">
-                <tr>
-                  <th rowspan="3">日付</th>
-                  <th rowspan="3">曜日</th>
-                  <th colspan="4">変更前</th>
-                  <th colspan="4">変更後</th>
-                  <th rowspan="3">備考</th>
-                  <th rowspan="3">指示者確認㊞</th>
-                  <th rowspan="3">変更</th>
-                  <th rowspan="3">勤怠を確認する</th>
-                </tr>
-                <tr>
-                  <th colspan="2">出社</th>
-                  <th colspan="2">退社</th>
-                  <th colspan="2">出社</th>
-                  <th colspan="2">退社</th>
-                </tr>
-                <tr>
-                  <th>時</th>
-                  <th>分</th>
-                  <th>時</th>
-                  <th>分</th>
-                  <th>時</th>
-                  <th>分</th>
-                  <th>時</th>
-                  <th>分</th>
-                </tr>
-                <% @change_attendances.each do |change_attendance| %>
-                  <% if change_user.id == change_attendance.user_id %>
-                    <%= fields_for "attendances[]", change_attendance do |af| %>
-                      <tr>
-                        <td><%= l(change_attendance.worked_on, format: :short) %></td>
-                        <td class="days_color-<%= "#{change_attendance.worked_on.wday}" %>">
-                          <%= $days_of_the_week[change_attendance.worked_on.wday] %>
-                        </td>
-                          <% if change_attendance.first_start_time.present? %>
-                            <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :hour) %></td>
-                            <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :minute) %></td>
+  <% if current_user?(@user) %>
+    <div>【所属長承認申請のお知らせ】</div>
+  
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">【勤怠変更申請のお知らせ】</button>
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-center" role="document">
+        <!-- モーダルの内容 -->
+        <%= form_with(model: @users, url: attendances_approve_attendances_user_path, local: true, method: :patch) do |f| %>
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <% @change_users.each do |change_user| %>
+                <p class="center">【<%= change_user.name%>からの勤怠変更申請】</p>
+                <table class="table table-bordered table-condensed">
+                  <tr>
+                    <th rowspan="3">日付</th>
+                    <th rowspan="3">曜日</th>
+                    <th colspan="4">変更前</th>
+                    <th colspan="4">変更後</th>
+                    <th rowspan="3">備考</th>
+                    <th rowspan="3">指示者確認㊞</th>
+                    <th rowspan="3">変更</th>
+                    <th rowspan="3">勤怠を確認する</th>
+                  </tr>
+                  <tr>
+                    <th colspan="2">出社</th>
+                    <th colspan="2">退社</th>
+                    <th colspan="2">出社</th>
+                    <th colspan="2">退社</th>
+                  </tr>
+                  <tr>
+                    <th>時</th>
+                    <th>分</th>
+                    <th>時</th>
+                    <th>分</th>
+                    <th>時</th>
+                    <th>分</th>
+                    <th>時</th>
+                    <th>分</th>
+                  </tr>
+                  <% @change_attendances.each do |change_attendance| %>
+                    <% if change_user.id == change_attendance.user_id %>
+                      <%= fields_for "attendances[]", change_attendance do |af| %>
+                        <tr>
+                          <td><%= l(change_attendance.worked_on, format: :short) %></td>
+                          <td class="days_color-<%= "#{change_attendance.worked_on.wday}" %>">
+                            <%= $days_of_the_week[change_attendance.worked_on.wday] %>
+                          </td>
+                            <% if change_attendance.first_start_time.present? %>
+                              <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :hour) %></td>
+                              <td><%= l(change_attendance.first_start_time.floor_to(15.minutes), format: :minute) %></td>
+                            <% else %>
+                              <td></td>
+                              <td></td>
+                            <% end %>
+                          <% if change_attendance.first_end_time.present? %>
+                              <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :hour) %></td>
+                              <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :minute) %></td>
                           <% else %>
-                            <td></td>
-                            <td></td>
+                              <td></td>
+                              <td></td>
                           <% end %>
-                        <% if change_attendance.first_end_time.present? %>
-                            <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :hour) %></td>
-                            <td><%= l(change_attendance.first_end_time.floor_to(15.minutes), format: :minute) %></td>
-                        <% else %>
-                            <td></td>
-                            <td></td>
-                        <% end %>
-                        <% if change_attendance.second_start_time.present? %>
-                            <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :hour) %></td>
-                            <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :minute) %></td>
-                        <% else %>
-                            <td></td>
-                            <td></td>
-                        <% end %>
-                        <% if change_attendance.second_end_time.present? %>
-                            <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :hour) %></td>
-                            <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :minute) %></td>
-                        <% else %>
-                            <td></td>
-                            <td></td>
-                        <% end %>
-                        <td><%= change_attendance.note %></td>
-                        <td><%= af.select :status, ['なし', '申請中', '承認', '否認'], {include_blank: false, selected: '申請中' }, class: 'sample' %></td>
-                        <td><%= af.check_box :change_check_box ,{:checked => false}, "true", "false" %></td>
-                        <td><%= link_to "確認", user_path(id: change_user.id, date: @first_day), class: "btn btn-lg btn-primary" %></td>
-                      </tr>
+                          <% if change_attendance.second_start_time.present? %>
+                              <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :hour) %></td>
+                              <td><%= l(change_attendance.second_start_time.floor_to(15.minutes), format: :minute) %></td>
+                          <% else %>
+                              <td></td>
+                              <td></td>
+                          <% end %>
+                          <% if change_attendance.second_end_time.present? %>
+                              <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :hour) %></td>
+                              <td><%= l(change_attendance.second_end_time.floor_to(15.minutes), format: :minute) %></td>
+                          <% else %>
+                              <td></td>
+                              <td></td>
+                          <% end %>
+                          <td><%= change_attendance.note %></td>
+                          <td><%= af.select :status, ['なし', '申請中', '承認', '否認'], {include_blank: false, selected: '申請中' }, class: 'sample' %></td>
+                          <td><%= af.check_box :change_check_box ,{:checked => false}, "true", "false" %></td>
+                          <td><%= link_to "確認", user_path(id: change_user.id, date: change_attendance.worked_on.beginning_of_month), class: "btn btn-lg btn-primary" %></td>
+                        </tr>
+                      <% end %>
                     <% end %>
                   <% end %>
-                <% end %>
-              </table>
-            <% end %>
+                </table>
+              <% end %>
+              </div>
+            <div class="modal-footer">
+              <td><%= f.submit "変更を送信する", class: "btn btn-lg btn-primary" %></td>
             </div>
-          <div class="modal-footer">
-            <td><%= f.submit "変更を送信する", class: "btn btn-lg btn-primary" %></td>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <% if current_user?(@user) %>
     <div>【残業申請のお知らせ】</div>
+    <div class="btn-users-show">
+      <%= link_to "勤怠の編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
+      <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
+    </div>
+  
+    <td><%= link_to "勤怠修正ログ（承認済み）", attendances_fix_log_user_path(@user), class: "btn btn-primary" %></td>
   <% end %>
-  <div class="btn-users-show">
-    <%= link_to "勤怠の編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
-    <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
-  </div>
-
-  <td><%= link_to "勤怠修正ログ（承認済み）", attendances_fix_log_user_path(@user), class: "btn btn-primary" %></td>
-
   <div>
     <table class="table table-bordered table-condensed table-hover" id="table-attendances">
       <thead>
@@ -165,7 +169,11 @@
       <tbody>
         <% @attendances.each do |day| %>
           <tr>
-            <td><%= link_to "残業申請", '#', class: "btn btn-primary" %></td>
+            <td>
+              <% if current_user?(@user) %>
+                <%= link_to "残業申請", '#', class: "btn btn-primary" %>
+              <% end %>
+            </td>
             <td><%= l(day.worked_on, format: :short) %></td>
             <td class="days_color-<%= "#{day.worked_on.wday}" %>">
               <%= $days_of_the_week[day.worked_on.wday] %>
@@ -179,7 +187,9 @@
             <% end %>
             <td>
               <% if btn_text = attendance_state(day) %>
-                <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+                <% if current_user?(@user) %>
+                  <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+                <% end %>
               <% end %>
             </td>
             <% if day.finished_at.present? %>
@@ -220,13 +230,15 @@
           <td rowspan="2"></td>
           <td rowspan="2"></td>
           <td rowspan="2"></td>
-          <td rowspan="2">所属長承認: 申請中</br>
-            <select class="custom-select custom-select-sm">
-              <option selected></option>
-              <option value="1">上長1</option>
-              <option value="2">上長2</option>
-            </select></br>
-            <%= link_to "申請", '#', class: "btn btn-primary" %>
+          <td rowspan="2">
+            <% if current_user?(@user) %>所属長承認: 申請中</br>
+              <select class="custom-select custom-select-sm">
+                <option selected></option>
+                <option value="1">上長1</option>
+                <option value="2">上長2</option>
+              </select></br>
+              <%= link_to "申請", '#', class: "btn btn-primary" %>
+            <% end %>
           </td>
         </tr>
         <tr>
