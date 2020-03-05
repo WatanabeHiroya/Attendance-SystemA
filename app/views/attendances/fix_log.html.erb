@@ -18,28 +18,32 @@
         <% if attendance.second_start_time.present? || attendance.second_end_time.present? %>
           <tr>
             <td><%= attendance.worked_on %></td>
-            <% if attendance.first_start_time.present? %>
-              <td><%= attendance.first_start_time.strftime("%R") %></td>
-            <% else %>
-              <td></td>
-            <% end %>
-            <% if attendance.first_end_time.present? %>
-              <td><%= attendance.first_end_time.strftime("%R") %></td>
-            <% else %>
-              <td></td>              
-            <% end %>
-            <% if attendance.second_start_time.present? %>
-              <td><%= attendance.second_start_time.strftime("%R") %></td>
-            <% else %>
-              <td></td>              
-            <% end %>
-            <% if attendance.second_end_time.present? %>
-              <td><%= attendance.second_end_time.strftime("%R") %></td>
-            <% else %>
-              <td></td>              
-            <% end %>
-            <td></td>
-            <td></td>
+            <td>
+              <% if attendance.first_start_time.present? %>
+                <%= attendance.first_start_time.strftime("%R") %>
+              <% end %>
+            </td>
+            <td>
+              <% if attendance.first_end_time.present? %>
+                <%= attendance.first_end_time.strftime("%R") %>
+              <% end %>
+            </td>
+            <td>
+              <% if attendance.second_start_time.present? %>
+                <%= attendance.second_start_time.strftime("%R") %>
+              <% end %>
+            </td>
+            <td>
+              <% if attendance.second_end_time.present? %>
+                <%= attendance.second_end_time.strftime("%R") %>
+              <% end %>
+            </td>
+            <td>
+              <%= attendance.instruction %>
+            </td>
+            <td>
+              <%= attendance.updated_at.strftime("%F") %>
+            </td>
           </tr>
         <% end %>
       <% end %>
