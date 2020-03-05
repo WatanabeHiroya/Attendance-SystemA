@@ -58,8 +58,16 @@ class AttendancesController < ApplicationController
       redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
-  def approve_attendances
-    
+  def show_changed_request
+    @change_attendances = Attendance.where(status: "申請中")
+    @change_users = []    #ここで重複をさせない
+    @change_attendances.each do |change_attendance|
+      @change_users.push(User.find_by(id: change_attendance.user_id))
+    end
+    @change_users = @change_users.uniq #配列の重複をなくす
+  end
+  
+  def approve_changed_request
     approve_attendances_params.each do |id, status|
       attendance = Attendance.find(id)
       attendance.update_attributes(status)

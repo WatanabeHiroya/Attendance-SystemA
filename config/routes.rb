@@ -19,7 +19,8 @@ Rails.application.routes.draw do
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
       get 'attendances/fix_log'
-      patch 'attendances/approve_attendances'
+      get 'attendances/show_changed_request'
+      patch 'attendances/approve_changed_request'
     end
     collection { post :import }
     resources :attendances, only: :update
