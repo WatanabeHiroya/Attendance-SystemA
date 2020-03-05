@@ -69,7 +69,7 @@ class AttendancesController < ApplicationController
   
   def fix_log
     # 該当月に変更した勤怠情報のみを取得
-    
+    @attendances = @attendances.where(status: "承認")
   end
 
   private

@@ -13,40 +13,37 @@
         <th>指示者</th>
         <th>承認日</th>
       </tr>
-      
       <% @attendances.each do |attendance| %>
-        <% if attendance.second_start_time.present? || attendance.second_end_time.present? %>
-          <tr>
-            <td><%= attendance.worked_on %></td>
-            <td>
-              <% if attendance.first_start_time.present? %>
-                <%= attendance.first_start_time.strftime("%R") %>
-              <% end %>
-            </td>
-            <td>
-              <% if attendance.first_end_time.present? %>
-                <%= attendance.first_end_time.strftime("%R") %>
-              <% end %>
-            </td>
-            <td>
-              <% if attendance.second_start_time.present? %>
-                <%= attendance.second_start_time.strftime("%R") %>
-              <% end %>
-            </td>
-            <td>
-              <% if attendance.second_end_time.present? %>
-                <%= attendance.second_end_time.strftime("%R") %>
-              <% end %>
-            </td>
-            <td>
-              <%= attendance.instruction %>
-            </td>
-            <td>
-              <%= attendance.updated_at.strftime("%F") %>
-            </td>
-          </tr>
+        <tr>
+          <td><%= attendance.worked_on %></td>
+          <td>
+            <% if attendance.first_start_time.present? %>
+              <%= attendance.first_start_time.strftime("%R") %>
+            <% end %>
+          </td>
+          <td>
+            <% if attendance.first_end_time.present? %>
+              <%= attendance.first_end_time.strftime("%R") %>
+            <% end %>
+          </td>
+          <td>
+            <% if attendance.second_start_time.present? %>
+              <%= attendance.second_start_time.strftime("%R") %>
+            <% end %>
+          </td>
+          <td>
+            <% if attendance.second_end_time.present? %>
+              <%= attendance.second_end_time.strftime("%R") %>
+            <% end %>
+          </td>
+          <td>
+            <%= attendance.instruction %>
+          </td>
+          <td>
+            <%= attendance.updated_at.strftime("%F") %>
+          </td>
+        </tr>
         <% end %>
-      <% end %>
     </table>
   </div>
 </div>

@@ -132,7 +132,7 @@
       <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
     </div>
   
-    <td><%= link_to "勤怠修正ログ（承認済み）", attendances_fix_log_user_path(@user), class: "btn btn-primary" %></td>
+    <td><%= link_to "勤怠修正ログ（承認済み）", attendances_fix_log_user_path(@user, date: @first_day), class: "btn btn-primary" %></td>
   <% end %>
   <div>
     <table class="table table-bordered table-condensed table-hover" id="table-attendances">
