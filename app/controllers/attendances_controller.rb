@@ -79,6 +79,12 @@ class AttendancesController < ApplicationController
     # 該当月に変更した勤怠情報のみを取得
     @attendances = @attendances.where(status: "承認")
   end
+  
+  #残業について
+  def show_apply_overtime
+  end
+  
+  
 
   private
 

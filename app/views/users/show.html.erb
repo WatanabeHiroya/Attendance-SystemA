@@ -80,7 +80,7 @@
           <tr>
             <td>
               <% if current_user?(@user) %>
-                <%= link_to "残業申請", '#', class: "btn btn-primary" %>
+                <%= link_to "残業申請", attendances_show_apply_overtime_user_path, remote: true, class: "btn btn-primary" %>
               <% end %>
             </td>
             <td><%= l(day.worked_on, format: :short) %></td>
@@ -161,3 +161,5 @@
 </div>
 
 <div id="show_changed_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="show_apply_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+

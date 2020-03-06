@@ -1,0 +1,32 @@
+<div class="modal-dialog modal-lg modal-dialog-center" role="document">
+  <%= form_with(url: attendances_approve_overtime_request_user_path, local: true, method: :patch) do |f| %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-condensed">
+          <tr>
+            <th>日付</th>
+            <th>曜日</th>
+            <th>終了予定時間</th>
+            <th>翌日</th>
+            <th>業務処理内容</th>
+            <th>指示者確認㊞</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <td><%= f.submit "変更を送信する", class: "btn btn-lg btn-primary" %></td>
+      </div>
+    </div>
+  <% end %>
+</div>

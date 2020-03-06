@@ -21,6 +21,11 @@ Rails.application.routes.draw do
       get 'attendances/fix_log'
       get 'attendances/show_changed_request'
       patch 'attendances/approve_changed_request'
+      
+      get 'attendances/show_apply_overtime'
+      patch 'attendances/apply_overtime'
+      get 'attendances/show_overtime_request'
+      patch 'attendances/approve_overtime_request'
     end
     collection { post :import }
     resources :attendances, only: :update
