@@ -5,6 +5,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
+        <h1>【残業申請】</h1>
         <table class="table table-bordered table-condensed">
           <tr>
             <th>日付</th>
@@ -15,17 +16,20 @@
             <th>指示者確認㊞</th>
           </tr>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+            <td><%= l(@attendance.worked_on, format: :short) %></td>
+            <td class="days_color-<%= "#{@attendance.worked_on.wday}" %>">
+              <%= $days_of_the_week[@attendance.worked_on.wday] %>
+            </td>
+            
+            <td><%= f.time_field :overtime_finished_at, class: "form-control" %></td>
+            <td><%= f.check_box :overtime_next_day_flag %></td>
+            <td><%= f.text_field :overtime_content, class: "form-control" %></td>
+            <td><%= f.select :overtime_instruction, ['上長1', '上長2'], {include_blank: ''}, class: 'sample' %></td>
+            </tr>
         </table>
       </div>
       <div class="modal-footer">
-        <td><%= f.submit "変更を送信する", class: "btn btn-lg btn-primary" %></td>
+        <td><%= f.submit "変更を送信する", class: "btn btn-block btn-primary" %></td>
       </div>
     </div>
   <% end %>

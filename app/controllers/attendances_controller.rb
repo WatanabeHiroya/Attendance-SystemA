@@ -82,6 +82,16 @@ class AttendancesController < ApplicationController
   
   #残業について
   def show_apply_overtime
+    @attendance = Attendance.find(params[:id])
+  end
+  
+  def approve_overtime_request
+    show_apply_overtime
+    @attendance.update_attributes(overtime_params)
+    flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
+    redirect_to user_url(date: params[:date])
+    
+
   end
   
   
@@ -96,5 +106,10 @@ class AttendancesController < ApplicationController
     def approve_attendances_params
     # require(:attendance)は必要ない？
       params.permit(attendances: [:id, :status])[:attendances]
+    end
+    
+    #残業申請情報
+    def overtime_params
+      params.require(:attendance).permit(:id, :overtime_finished_at, :overtime_next_day_flag, :overtime_content, :overtime_instruction)
     end
 end
