@@ -19,7 +19,6 @@
         <td colspan="3">基本時間 <%= format_basic_info(@user.basic_work_time) %></td>
         <td>初日 <%= l(@first_day, format: :short) %></td>
       </tr>
-  
       <tr>
         <td>所属 <%= @user.affiliation.present? ? @user.affiliation : "未所属" %></td>
         <td>氏名 <%= @user.name %></td>
@@ -32,10 +31,8 @@
   </div>
   <% if current_user?(@user) %>
     <div>【所属長承認申請のお知らせ】</div>
-  
-    <%= link_to "【勤怠変更申請のお知らせ】", attendances_show_changed_request_user_path(@user), remote: true %>
-
-    <div>【残業申請のお知らせ】</div>
+    <div><%= link_to "【勤怠変更申請のお知らせ】", attendances_show_changed_request_user_path(@user), remote: true %></div>
+    <div><%= link_to "【残業申請のお知らせ】", attendances_show_overtime_request_user_path(@user), remote: true %></div>
     <div class="btn-users-show">
       <%= link_to "勤怠の編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
       <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
@@ -128,7 +125,15 @@
             </td>
             <td>
               <% if day.overtime_finished_at.present? %>
-               <%= l(day.overtime_finished_at.floor_to(15.minutes), format: :time).to_f + l(day.overtime_finished_at.floor_to(15.minutes), format: :minute).to_f/60 - l(@user.designated_work_end_time.floor_to(15.minutes), format: :time).to_f %>
+                <% if day.overtime_next_day_flag == "0" %>
+                  <%= l(day.overtime_finished_at.floor_to(15.minutes), format: :time).to_f + 
+                      l(day.overtime_finished_at.floor_to(15.minutes), format: :minute).to_f/60 - 
+                      l(@user.designated_work_end_time.floor_to(15.minutes), format: :time).to_f %>
+                <% else %>
+                  <%= l(day.overtime_finished_at.floor_to(15.minutes), format: :time).to_f + 
+                      l(day.overtime_finished_at.floor_to(15.minutes), format: :minute).to_f/60 - 
+                      l(@user.designated_work_end_time.floor_to(15.minutes), format: :time).to_f + 24 %>
+                <% end %>
               <% end %>
             </td>
             <td></td>
@@ -174,4 +179,5 @@
 
 <div id="show_changed_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="show_apply_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="show_overtime_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 

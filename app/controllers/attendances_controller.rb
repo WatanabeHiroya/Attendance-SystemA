@@ -80,20 +80,27 @@ class AttendancesController < ApplicationController
     @attendances = @attendances.where(status: "承認")
   end
   
-  #残業について
+  # 残業申請モーダル
   def show_apply_overtime
     @attendance = Attendance.find(params[:id])
   end
   
-  def approve_overtime_request
+  # 残業申請
+  def apply_overtime
     show_apply_overtime
     @attendance.update_attributes(overtime_params)
-    flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
-    redirect_to user_url(date: params[:date])
-    
-
+    flash[:success] = "残業申請を送信しました。"
+    redirect_to user_url(@attendance.user_id)
   end
   
+  # 残業申請のお知らせ
+  def show_overtime_request
+    
+  end
+  
+  # 残業承認
+  def approve_overtime_request
+  end
   
 
   private

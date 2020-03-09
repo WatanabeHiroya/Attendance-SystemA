@@ -21,16 +21,6 @@ module AttendancesHelper
     end
   end 
   
-  # 残業時間を計算
-  def over_working_times(start, finished_at, flag)
-   # if flag == "0"
-   
-      finished_at - start
-   # else
-    #  format("%.2f", (((finish - start) / 60) /60.0) + 24)
-   # end
-  end
-  
 
   # 出社時間、退社時間のどちらか一方が空の時、falseを返す。  
   def attendances_invalid?
