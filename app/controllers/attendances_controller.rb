@@ -58,6 +58,7 @@ class AttendancesController < ApplicationController
       redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+  # 勤怠変更申請のお知らせ
   def show_changed_request
     @change_attendances = Attendance.where(status: "申請中")
     @change_users = []    #ここで重複をさせない
@@ -95,7 +96,13 @@ class AttendancesController < ApplicationController
   
   # 残業申請のお知らせ
   def show_overtime_request
+    @attendances = Attendance.where(overtime_status: "申請中")
     
+    @users = []
+    @attendances.each do |attendance|
+      @users.push(User.find_by(id: attendance.user_id))
+    end
+    @users = @users.uniq
   end
   
   # 残業承認
