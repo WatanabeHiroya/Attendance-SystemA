@@ -90,6 +90,9 @@ class AttendancesController < ApplicationController
   def apply_overtime
     show_apply_overtime
     @attendance.update_attributes(overtime_params)
+    unless @attendance.overtime_instruction == "" 
+      @attendance.update_attributes(overtime_status: "申請中")
+    end
     flash[:success] = "残業申請を送信しました。"
     redirect_to user_url(@attendance.user_id)
   end
@@ -97,7 +100,6 @@ class AttendancesController < ApplicationController
   # 残業申請のお知らせ
   def show_overtime_request
     @attendances = Attendance.where(overtime_status: "申請中")
-    
     @users = []
     @attendances.each do |attendance|
       @users.push(User.find_by(id: attendance.user_id))
