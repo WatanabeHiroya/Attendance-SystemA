@@ -35,4 +35,20 @@ module AttendancesHelper
     end
     return attendances
   end
+  
+  # 時間外時間計算
+  def overtime_calculation(attendance)
+    if attendance.overtime_finished_at.present?
+      if attendance.overtime_next_day_flag == "0" 
+        l(attendance.overtime_finished_at.floor_to(15.minutes), format: :time).to_f + 
+        l(attendance.overtime_finished_at.floor_to(15.minutes), format: :minute).to_f/60 - 
+        l(@user.designated_work_end_time.floor_to(15.minutes), format: :time).to_f 
+      else
+        l(attendance.overtime_finished_at.floor_to(15.minutes), format: :time).to_f + 
+        l(attendance.overtime_finished_at.floor_to(15.minutes), format: :minute).to_f/60 - 
+        l(@user.designated_work_end_time.floor_to(15.minutes), format: :time).to_f + 24 
+      end 
+    end
+  end
+  
 end

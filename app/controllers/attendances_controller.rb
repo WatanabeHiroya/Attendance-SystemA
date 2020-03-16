@@ -105,6 +105,7 @@ class AttendancesController < ApplicationController
       @users.push(User.find_by(id: attendance.user_id))
     end
     @users = @users.uniq
+    
   end
   
   # 残業承認

@@ -26,9 +26,21 @@
                   <td class="days_color-<%= "#{attendance.worked_on.wday}" %>">
                     <%= $days_of_the_week[attendance.worked_on.wday] %>
                   </td>
-                  <td><%= attendance.overtime_finished_at %></td>
-                  <td><%= user.designated_work_end_time %></td>
-                  <td>時間外時間</td>
+                  <td><%= l(attendance.overtime_finished_at, format: :time) %></td>
+                  <td><%= l(user.designated_work_end_time, format: :time) %></td>
+                  <td>
+                    <% if attendance.overtime_finished_at.present? %>
+                      <% if attendance.overtime_next_day_flag == "0" %>
+                        <%= l(attendance.overtime_finished_at.floor_to(15.minutes), format: :time).to_f + 
+                            l(attendance.overtime_finished_at.floor_to(15.minutes), format: :minute).to_f/60 - 
+                            l(user.designated_work_end_time.floor_to(15.minutes), format: :time).to_f %>
+                      <% else %>
+                        <%= l(attendance.overtime_finished_at.floor_to(15.minutes), format: :time).to_f + 
+                            l(attendance.overtime_finished_at.floor_to(15.minutes), format: :minute).to_f/60 - 
+                            l(user.designated_work_end_time.floor_to(15.minutes), format: :time).to_f + 24 %>
+                      <% end %>
+                    <% end %>
+                  </td>
                   <td><%= attendance.overtime_content %></td>
                   <td><%= f.select :status, ['なし', '申請中', '承認', '否認'], {include_blank: false, selected: '申請中' }, class: 'sample' %></td>
                   <td><%= f.check_box :change_check_box ,{:checked => false}, "true", "false" %></td>
