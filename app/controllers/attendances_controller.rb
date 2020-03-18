@@ -68,6 +68,7 @@ class AttendancesController < ApplicationController
     @change_users = @change_users.uniq #配列の重複をなくす
   end
   
+  # 勤怠変更申請承認
   def approve_changed_request
     approve_attendances_params.each do |id, status|
       attendance = Attendance.find(id)
@@ -110,6 +111,11 @@ class AttendancesController < ApplicationController
   
   # 残業承認
   def approve_overtime_request
+    approve_overtime_params.each do |id, overtime_status|
+      attendance = Attendance.find(id)
+      attendance.update_attributes(overtime_status)
+    end
+    redirect_to user_url
   end
   
 
@@ -120,13 +126,20 @@ class AttendancesController < ApplicationController
       params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :first_start_time, :first_end_time, :second_start_time, :second_end_time, :next_day_flag, :instruction])[:attendances]
     end
     
+    # 勤怠変更申請承認
     def approve_attendances_params
     # require(:attendance)は必要ない？
       params.permit(attendances: [:id, :status])[:attendances]
     end
     
-    #残業申請情報
+    # 残業申請情報
     def overtime_params
       params.require(:attendance).permit(:id, :overtime_finished_at, :overtime_next_day_flag, :overtime_content, :overtime_instruction)
+    end
+    
+    # 残業申請承認
+    def approve_overtime_params
+      params.permit(attendances: [:id, :overtime_status])[:attendances]
+     # params.require(:attendance).permit(:id, :overtime_status)
     end
 end
