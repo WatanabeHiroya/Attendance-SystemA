@@ -111,9 +111,9 @@ class AttendancesController < ApplicationController
   
   # 残業承認
   def approve_overtime_request
-    approve_overtime_params.each do |id, overtime_status|
+    approve_overtime_params.each do |id, item|
       attendance = Attendance.find(id)
-      attendance.update_attributes(overtime_status)
+      attendance.update_attributes(item)
     end
     redirect_to user_url
   end
@@ -139,9 +139,6 @@ class AttendancesController < ApplicationController
     
     # 残業申請承認
     def approve_overtime_params
-     # params.permit(attendances: [:id, :overtime_status])[:attendances]
-     # params.require(:attendance).permit(:id, :overtime_status)
-     # params.require(:attendance).permit(attendances: [:id, :overtime_status])[:attendances]
-      params.permit(:id, :overtime_status)
+      params.permit(attendances: [:id, :overtime_status])[:attendances]
     end
 end
