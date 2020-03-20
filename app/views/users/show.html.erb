@@ -125,8 +125,12 @@
             </td>
             <td><%= overtime_calculation(attendance) %></td>
             <td></td>
-            <% if attendance.instruction.present? %>
-                <td><%= attendance.instruction %>勤怠編集<%= attendance.status %></td>
+            <% if attendance.instruction.present? && attendance.overtime_instruction.present? %>
+              <td><%= attendance.instruction %>勤怠編集<%= attendance.status %><br><%= attendance.overtime_instruction %>残業<%= attendance.overtime_status %></td>
+            <% elsif attendance.instruction.present? %>
+              <td><%= attendance.instruction %>勤怠編集<%= attendance.status %></td>
+            <% elsif attendance.overtime_instruction.present? %>
+              <td><%= attendance.overtime_instruction %>残業<%= attendance.overtime_status %></td>
             <% else %>
               <td></td>
             <% end %>
