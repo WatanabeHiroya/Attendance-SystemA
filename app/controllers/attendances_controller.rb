@@ -139,7 +139,9 @@ class AttendancesController < ApplicationController
     
     # 残業申請承認
     def approve_overtime_params
-      params.permit(attendances: [:id, :overtime_status])[:attendances]
+     # params.permit(attendances: [:id, :overtime_status])[:attendances]
      # params.require(:attendance).permit(:id, :overtime_status)
+     # params.require(:attendance).permit(attendances: [:id, :overtime_status])[:attendances]
+      params.permit(:id, :overtime_status)
     end
 end
