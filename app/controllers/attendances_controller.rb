@@ -118,13 +118,29 @@ class AttendancesController < ApplicationController
     redirect_to user_url
   end
   
-  # 所属長申請
+  # 所属長承認申請
   def apply_affiliation
+    # 月初日の勤怠情報を取得
     @attendance = @attendances[0]
     @attendance.update_attributes(affiliation_params)
     flash[:success] = "所属長承認申請を送信しました"
     redirect_to user_url(@attendance.user_id)
   end
+  
+  # 所属長承認申請のお知らせ
+  def show_apply_affiliation
+    @attendances = Attendance.where(affiliation_status: "申請中")
+    @users = []
+    @attendances.each do |attendance|
+      @users.push(User.find_by(id: attendance.user_id))
+    end
+    @users = @users.uniq
+  end
+  
+  # 所属長承認申請承認
+  def approve_affiliation
+  end
+  
   
 
   private

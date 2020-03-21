@@ -30,7 +30,7 @@
     </table>
   </div>
   <% if current_user?(@user) %>
-    <div>【所属長承認申請のお知らせ】</div>
+    <div><%= link_to "【所属長承認申請のお知らせ】", attendances_show_apply_affiliation_user_path(@user), remote: true %></div>
     <div><%= link_to "【勤怠変更申請のお知らせ】", attendances_show_changed_request_user_path(@user), remote: true %></div>
     <div><%= link_to "【残業申請のお知らせ】", attendances_show_overtime_request_user_path(@user), remote: true %></div>
     <div class="btn-users-show">
@@ -177,4 +177,5 @@
 <div id="show_changed_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="show_apply_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="show_overtime_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="show_apply_affiliation" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
