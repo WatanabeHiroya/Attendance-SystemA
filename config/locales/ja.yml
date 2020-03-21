@@ -41,6 +41,7 @@ ja:
       default: "%Y/%m/%d"
       long: "%Y年%m月%d日(%a)"
       middle: "%Y年%m月"
+      month: "%m月"
       short: "%-m/%-d"
     month_names:
     - 
@@ -204,7 +205,6 @@ ja:
       default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
-      month: "%m"
       time: "%H:%M"
       hour: "%H"
       minute: "%M"
