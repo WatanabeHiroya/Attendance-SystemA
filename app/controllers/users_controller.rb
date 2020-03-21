@@ -19,6 +19,8 @@ class UsersController < ApplicationController
       end
     end
     @worked_sum = @attendances.where.not(started_at: nil).count
+    # 月初日
+    @attendance = @attendances[0]
   end
   
   def send_attendances_csv(attendances)

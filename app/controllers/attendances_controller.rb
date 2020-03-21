@@ -1,10 +1,10 @@
 class AttendancesController < ApplicationController
   include AttendancesHelper
   
-  before_action :set_user, only: [:edit_one_month, :update_one_month, :fix_log]
+  before_action :set_user, only: [:edit_one_month, :update_one_month, :fix_log, :apply_affiliation]
   before_action :logged_in_user, only: [:update, :edit_one_month]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month, :fix_log]
-  before_action :set_one_month, only: [:edit_one_month, :fix_log]
+  before_action :set_one_month, only: [:edit_one_month, :fix_log, :apply_affiliation]
 
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
 
@@ -118,6 +118,14 @@ class AttendancesController < ApplicationController
     redirect_to user_url
   end
   
+  # 所属長申請
+  def apply_affiliation
+    @attendance = @attendances[0]
+    @attendance.update_attributes(affiliation_params)
+    flash[:success] = "所属長承認申請を送信しました"
+    redirect_to user_url(@attendance.user_id)
+  end
+  
 
   private
 
@@ -140,5 +148,10 @@ class AttendancesController < ApplicationController
     # 残業申請承認
     def approve_overtime_params
       params.permit(attendances: [:id, :overtime_status])[:attendances]
+    end
+    
+    # 所属長申請
+    def affiliation_params
+      params.permit(attendance: [:affiliation_status, :affiliation_instruction])[:attendance]
     end
 end

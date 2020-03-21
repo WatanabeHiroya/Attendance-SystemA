@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
-
+<%= form_with(model: @attendance, url: attendances_apply_affiliation_user_path(@user), local: true, method: :patch) do |f| %>
 <div class="container">
   <div>
     <table class="table table-bordered table-condensed user-table">
@@ -135,7 +135,9 @@
               <td></td>
             <% end %>
           </tr>
+          
         <% end %>
+        
       </tbody>
   
       <tfoot>
@@ -149,16 +151,18 @@
           <td rowspan="2"></td>
           <td rowspan="2"></td>
           <td rowspan="2">
-            <% if current_user?(@user) %>所属長承認: 申請中</br>
-              <select class="custom-select custom-select-sm">
-                <option selected></option>
-                <option value="1">上長1</option>
-                <option value="2">上長2</option>
-              </select></br>
-              <%= link_to "申請", '#', class: "btn btn-primary" %>
-            <% end %>
+            所属長承認：<% if @attendance.affiliation_status.present? %>
+                          <%= @attendance.affiliation_status %>
+                        <% else %>
+                          未
+                        <% end %>
+            </br><%= f.select :affiliation_instruction, ['上長1', '上長2'], {include_blank: false, selected: '申請中' }, class: 'sample' %></br>
+            <%= f.hidden_field :affiliation_status, :value => "申請中" %>
+            <%= f.submit "申請", class: "btn btn-block btn-primary" %>
           </td>
         </tr>
+
+        
         <tr>
           <td colspan="3"><%= @attendances.count %></td>
           <td colspan="6"><%= @worked_sum*7.5 %></td>
@@ -168,6 +172,7 @@
     </table>
   </div>
 </div>
+<% end %>
 
 <div id="show_changed_request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="show_apply_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
