@@ -129,12 +129,13 @@ class AttendancesController < ApplicationController
   
   # 所属長承認申請のお知らせ
   def show_apply_affiliation
-    @attendances = Attendance.where(affiliation_status: "申請中")
+    @attendances = Attendance.where(affiliation_status: "申請中").where(affiliation_instruction: "上長1")
     @users = []
     @attendances.each do |attendance|
       @users.push(User.find_by(id: attendance.user_id))
     end
     @users = @users.uniq
+    
   end
   
   # 所属長承認申請承認

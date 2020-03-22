@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info]
   before_action :set_one_month, only: :show
   before_action :admin_or_correct_user, only: [:show, :edit, :update]
-  before_action :configure_sign_up_params, only: []
+  before_action :show_apply_affiliation, only: [:show]
 
   def index
     @users = User.paginate(page: params[:page], per_page: 10)
@@ -19,12 +19,8 @@ class UsersController < ApplicationController
       end
     end
     @worked_sum = @attendances.where.not(started_at: nil).count
-    # 所属長承認申請確認用（月初日）
+    # 所属長承認申請用（月初日）
     @attendance = @attendances[0]
-    # 勤怠変更申請有無確認用
-    @attendance_edit = @attendances.find_by(status: "申請中")
-    # 残業申請有無確認用
-    @attendance_overtime = @attendances.find_by(overtime_status: "申請中")
   end
   
   def send_attendances_csv(attendances)
@@ -112,6 +108,15 @@ class UsersController < ApplicationController
     @users = User.all.includes(:attendances)
   end
   
+  def show_apply_affiliation
+    @affiliation_attendances = Attendance.where(affiliation_status: "申請中").where(affiliation_instruction: "上長1")
+    @affiliation_users = []
+    @affiliation_attendances.each do |attendance|
+      @affiliation_users.push(User.find_by(id: attendance.user_id))
+    end
+    @affiliation_users = @affiliation_users.uniq
+    
+  end
 
 
   private
