@@ -58,16 +58,6 @@ class AttendancesController < ApplicationController
       redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
-  # 勤怠変更申請のお知らせ
-  def show_changed_request
-    @change_attendances = Attendance.where(status: "申請中")
-    @change_users = []    #ここで重複をさせない
-    @change_attendances.each do |change_attendance|
-      @change_users.push(User.find_by(id: change_attendance.user_id))
-    end
-    @change_users = @change_users.uniq #配列の重複をなくす
-  end
-  
   # 勤怠変更申請承認
   def approve_changed_request
     approve_attendances_params.each do |id, status|
@@ -98,17 +88,6 @@ class AttendancesController < ApplicationController
     redirect_to user_url(@attendance.user_id)
   end
   
-  # 残業申請のお知らせ
-  def show_overtime_request
-    @attendances = Attendance.where(overtime_status: "申請中")
-    @users = []
-    @attendances.each do |attendance|
-      @users.push(User.find_by(id: attendance.user_id))
-    end
-    @users = @users.uniq
-    
-  end
-  
   # 残業承認
   def approve_overtime_request
     approve_overtime_params.each do |id, item|
@@ -125,17 +104,6 @@ class AttendancesController < ApplicationController
     @attendance.update_attributes(affiliation_params)
     flash[:info] = "所属長承認申請を送信しました"
     redirect_to user_url(@attendance.user_id)
-  end
-  
-  # 所属長承認申請のお知らせ
-  def show_apply_affiliation
-    @attendances = Attendance.where(affiliation_status: "申請中").where(affiliation_instruction: "上長1")
-    @users = []
-    @attendances.each do |attendance|
-      @users.push(User.find_by(id: attendance.user_id))
-    end
-    @users = @users.uniq
-    
   end
   
   # 所属長承認申請承認

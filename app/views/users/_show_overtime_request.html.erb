@@ -5,7 +5,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <% @users.each do |user| %>
+        <% @overtime_users.each do |user| %>
           <h1>【<%= user.name %>からの残業申請】</h1>
           <table class="table table-bordered table-condensed">
             <tr>
@@ -19,7 +19,7 @@
               <th>変更</th>
               <th>勤怠を確認する</th>
             </tr>
-            <% @attendances.each do |attendance| %>
+            <% @overtime_attendances.each do |attendance| %>
               <% if user.id == attendance.user_id %>
                 <%= fields_for "attendances[]", attendance do |af| %>
                   <tr>

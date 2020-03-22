@@ -5,7 +5,9 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info]
   before_action :set_one_month, only: :show
   before_action :admin_or_correct_user, only: [:show, :edit, :update]
-  before_action :show_apply_affiliation, only: [:show]
+  before_action :show_apply_affiliation, only: :show
+  before_action :show_changed_request, only: :show
+  before_action :show_overtime_request, only: :show
 
   def index
     @users = User.paginate(page: params[:page], per_page: 10)
@@ -108,6 +110,7 @@ class UsersController < ApplicationController
     @users = User.all.includes(:attendances)
   end
   
+  # 所属長申請のお知らせ
   def show_apply_affiliation
     @affiliation_attendances = Attendance.where(affiliation_status: "申請中").where(affiliation_instruction: "上長1")
     @affiliation_users = []
@@ -115,7 +118,26 @@ class UsersController < ApplicationController
       @affiliation_users.push(User.find_by(id: attendance.user_id))
     end
     @affiliation_users = @affiliation_users.uniq
-    
+  end
+  
+  # 勤怠変更申請のお知らせ
+  def show_changed_request
+    @change_attendances = Attendance.where(status: "申請中").where(instruction: "上長1")
+    @change_users = []    
+    @change_attendances.each do |change_attendance|
+      @change_users.push(User.find_by(id: change_attendance.user_id))
+    end
+    @change_users = @change_users.uniq #配列の重複をなくす
+  end
+  
+  # 残業申請のお知らせ
+  def show_overtime_request
+    @overtime_attendances = Attendance.where(overtime_status: "申請中").where(overtime_instruction: "上長1")
+    @overtime_users = []
+    @overtime_attendances.each do |attendance|
+      @overtime_users.push(User.find_by(id: attendance.user_id))
+    end
+    @overtime_users = @overtime_users.uniq
   end
 
 

@@ -31,19 +31,23 @@
   </div>
   <% if current_user?(@user) %>
     <% if @affiliation_users.present? %>
-      <div><%= link_to "【所属長承認申請のお知らせ】", attendances_show_apply_affiliation_user_path(@user), remote: true, class: "link" %>
-      <span class="notification"><%= @affiliation_users.count %>件の通知があります</span>
+      <div><%= link_to "【所属長承認申請のお知らせ】", show_apply_affiliation_user_path(@user), remote: true, class: "link" %>
+        <span class="notification"><%= @affiliation_users.count %>件の通知があります</span>
       </div>
     <% else %>
       <div>【所属長承認申請のお知らせ】</div>
     <% end %>
-    <% if %>
-      <div><%= link_to "【勤怠変更申請のお知らせ】", attendances_show_changed_request_user_path(@user), remote: true, class: "link" %></div>
+    <% if @change_users.present? %>
+      <div><%= link_to "【勤怠変更申請のお知らせ】", show_changed_request_user_path(@user), remote: true, class: "link" %>
+        <span class="notification"><%= @change_attendances.count %>件の通知があります</span>
+      </div>
     <% else %>
       <div>【勤怠変更申請のお知らせ】</div>
     <% end %>
-    <% if %>
-      <div><%= link_to "【残業申請のお知らせ】", attendances_show_overtime_request_user_path(@user), remote: true, class: "link" %></div>
+    <% if @overtime_users.present? %>
+      <div><%= link_to "【残業申請のお知らせ】", show_overtime_request_user_path(@user), remote: true, class: "link" %>
+        <span class="notification"><%= @overtime_attendances.count %>件の通知があります</span>
+      </div>
     <% else %>
       <div>【残業申請のお知らせ】</div>
     <% end %>
