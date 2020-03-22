@@ -30,9 +30,21 @@
     </table>
   </div>
   <% if current_user?(@user) %>
-    <div><%= link_to "【所属長承認申請のお知らせ】", attendances_show_apply_affiliation_user_path(@user), remote: true %></div>
-    <div><%= link_to "【勤怠変更申請のお知らせ】", attendances_show_changed_request_user_path(@user), remote: true %></div>
-    <div><%= link_to "【残業申請のお知らせ】", attendances_show_overtime_request_user_path(@user), remote: true %></div>
+    <% if @attendance.affiliation_status == "申請中" %>
+      <div><%= link_to "【所属長承認申請のお知らせ】", attendances_show_apply_affiliation_user_path(@user), remote: true, class: "link" %></div>
+    <% else %>
+      <div>【所属長承認申請のお知らせ】</div>
+    <% end %>
+    <% if @attendance_edit.present? %>
+      <div><%= link_to "【勤怠変更申請のお知らせ】", attendances_show_changed_request_user_path(@user), remote: true, class: "link" %></div>
+    <% else %>
+      <div>【勤怠変更申請のお知らせ】</div>
+    <% end %>
+    <% if @attendance_overtime.present? %>
+      <div><%= link_to "【残業申請のお知らせ】", attendances_show_overtime_request_user_path(@user), remote: true, class: "link" %></div>
+    <% else %>
+      <div>【残業申請のお知らせ】</div>
+    <% end %>
     <div class="btn-users-show">
       <%= link_to "勤怠の編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
       <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>

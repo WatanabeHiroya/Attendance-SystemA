@@ -19,8 +19,12 @@ class UsersController < ApplicationController
       end
     end
     @worked_sum = @attendances.where.not(started_at: nil).count
-    # 月初日
+    # 所属長承認申請確認用（月初日）
     @attendance = @attendances[0]
+    # 勤怠変更申請有無確認用
+    @attendance_edit = @attendances.find_by(status: "申請中")
+    # 残業申請有無確認用
+    @attendance_overtime = @attendances.find_by(overtime_status: "申請中")
   end
   
   def send_attendances_csv(attendances)
