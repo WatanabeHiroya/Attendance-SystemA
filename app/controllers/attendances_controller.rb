@@ -123,7 +123,7 @@ class AttendancesController < ApplicationController
     # 月初日の勤怠情報を取得
     @attendance = @attendances[0]
     @attendance.update_attributes(affiliation_params)
-    flash[:success] = "所属長承認申請を送信しました"
+    flash[:info] = "所属長承認申請を送信しました"
     redirect_to user_url(@attendance.user_id)
   end
   
@@ -139,6 +139,12 @@ class AttendancesController < ApplicationController
   
   # 所属長承認申請承認
   def approve_affiliation
+    approve_affiliation_params.each do |id, item|
+      attendance = Attendance.find(id)
+      attendance.update_attributes(item)
+    end
+    flash[:info] = "所属長承認申請を更新しました。"
+    redirect_to user_url
   end
   
   
@@ -153,21 +159,26 @@ class AttendancesController < ApplicationController
     # 勤怠変更申請承認
     def approve_attendances_params
     # require(:attendance)は必要ない？
-      params.permit(attendances: [:id, :status])[:attendances]
+      params.permit(attendances: [:status])[:attendances]
     end
     
     # 残業申請情報
     def overtime_params
-      params.require(:attendance).permit(:id, :overtime_finished_at, :overtime_next_day_flag, :overtime_content, :overtime_instruction)
+      params.require(:attendance).permit(:overtime_finished_at, :overtime_next_day_flag, :overtime_content, :overtime_instruction)
     end
     
     # 残業申請承認
     def approve_overtime_params
-      params.permit(attendances: [:id, :overtime_status])[:attendances]
+      params.permit(attendances: [:overtime_status])[:attendances]
     end
     
     # 所属長申請
     def affiliation_params
       params.permit(attendance: [:affiliation_status, :affiliation_instruction])[:attendance]
+    end
+    
+    # 所属長承認
+    def approve_affiliation_params
+      params.permit(attendances: [:affiliation_status])[:attendances]
     end
 end
