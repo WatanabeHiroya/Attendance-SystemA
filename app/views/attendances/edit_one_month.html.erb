@@ -42,7 +42,13 @@
               </td>
               <td><%= attendance.text_field :note, class: "form-control" %></td>
               <td>
-                <%= attendance.select :instruction, ['上長1', '上長2'], {include_blank: ''}, class: 'sample' %>
+                <% if @user.name == "上長1" %>
+                  <%= attendance.select :instruction,['上長2'],{include_blank: ''}, class: 'sample' %>
+                <% elsif @user.name == "上長2" %>
+                  <%= attendance.select :instruction,['上長1'],{include_blank: ''}, class: 'sample' %>
+                <% else %>
+                  <%= attendance.select :instruction,['上長1', '上長2'],{include_blank: ''}, class: 'sample' %>
+                <% end %>
               </td>
             </tr>
           <% end %>

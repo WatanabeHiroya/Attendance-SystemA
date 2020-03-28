@@ -75,6 +75,7 @@ class AttendancesController < ApplicationController
   # 残業申請モーダル
   def show_apply_overtime
     @attendance = Attendance.find(params[:id])
+    @user = User.find(@attendance.user_id)
   end
   
   # 残業申請

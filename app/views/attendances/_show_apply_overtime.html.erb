@@ -24,7 +24,15 @@
             <td><%= f.time_field :overtime_finished_at, class: "form-control" %></td>
             <td><%= f.check_box :overtime_next_day_flag %></td>
             <td><%= f.text_field :overtime_content, class: "form-control" %></td>
-            <td><%= f.select :overtime_instruction, ['上長1', '上長2'], {include_blank: ''}, class: 'sample' %></td>
+            <td>
+              <% if @user.name == "上長1" %>
+                <%= f.select :overtime_instruction,['上長2'],{include_blank: ''}, class: 'sample' %>
+              <% elsif @user.name == "上長2" %>
+                <%= f.select :overtime_instruction,['上長1'],{include_blank: ''}, class: 'sample' %>
+              <% else %>
+                <%= f.select :overtime_instruction,['上長1', '上長2'],{include_blank: ''}, class: 'sample' %>
+              <% end %>
+            </td>
             </tr>
         </table>
       </div>

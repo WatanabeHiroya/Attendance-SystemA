@@ -29,35 +29,39 @@
       </tr>
     </table>
   </div>
-  <% if current_user?(@user) %>
-    <% if @affiliation_users.present? %>
-      <div><%= link_to "【所属長承認申請のお知らせ】", show_apply_affiliation_user_path(@user), remote: true, class: "link" %>
-        <span class="notification"><%= @affiliation_users.count %>件の通知があります</span>
-      </div>
-    <% else %>
-      <div>【所属長承認申請のお知らせ】</div>
-    <% end %>
-    <% if @change_users.present? %>
-      <div><%= link_to "【勤怠変更申請のお知らせ】", show_changed_request_user_path(@user), remote: true, class: "link" %>
-        <span class="notification"><%= @change_attendances.count %>件の通知があります</span>
-      </div>
-    <% else %>
-      <div>【勤怠変更申請のお知らせ】</div>
-    <% end %>
-    <% if @overtime_users.present? %>
-      <div><%= link_to "【残業申請のお知らせ】", show_overtime_request_user_path(@user), remote: true, class: "link" %>
-        <span class="notification"><%= @overtime_attendances.count %>件の通知があります</span>
-      </div>
-    <% else %>
-      <div>【残業申請のお知らせ】</div>
-    <% end %>
-    <div class="btn-users-show">
-      <%= link_to "勤怠の編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
-      <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
-    </div>
   
-    <td><%= link_to "勤怠修正ログ（承認済み）", attendances_fix_log_user_path(@user, date: @first_day), class: "btn btn-primary" %></td>
+  <% if @user.superior == true %>
+    <% if current_user?(@user) %>
+      <% if @affiliation_users.present? %>
+        <div><%= link_to "【所属長承認申請のお知らせ】", show_apply_affiliation_user_path(@user), remote: true, class: "link" %>
+          <span class="notification"><%= @affiliation_users.count %>件の通知があります</span>
+        </div>
+      <% else %>
+        <div>【所属長承認申請のお知らせ】</div>
+      <% end %>
+      <% if @change_users.present? %>
+        <div><%= link_to "【勤怠変更申請のお知らせ】", show_changed_request_user_path(@user), remote: true, class: "link" %>
+          <span class="notification"><%= @change_attendances.count %>件の通知があります</span>
+        </div>
+      <% else %>
+        <div>【勤怠変更申請のお知らせ】</div>
+      <% end %>
+      <% if @overtime_users.present? %>
+        <div><%= link_to "【残業申請のお知らせ】", show_overtime_request_user_path(@user), remote: true, class: "link" %>
+          <span class="notification"><%= @overtime_attendances.count %>件の通知があります</span>
+        </div>
+      <% else %>
+        <div>【残業申請のお知らせ】</div>
+      <% end %>
+      <div class="btn-users-show">
+        <%= link_to "勤怠の編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
+        <%= link_to "CSV出力", user_path(format: :csv), class: "btn btn-primary" %>
+      </div>
+    
+      <td><%= link_to "勤怠修正ログ（承認済み）", attendances_fix_log_user_path(@user, date: @first_day), class: "btn btn-primary" %></td>
+    <% end %>
   <% end %>
+  
   <div>
     <table class="table table-bordered table-condensed table-hover" id="table-attendances">
       <thead>
@@ -173,8 +177,14 @@
                           <%= @attendance.affiliation_status %>
                         <% else %>
                           未
-                        <% end %>
-            </br><%= f.select :affiliation_instruction, ['上長1', '上長2'], {include_blank: false, selected: '申請中' }, class: 'sample' %></br>
+                        <% end %></br>
+            <% if @user.name == "上長1" %>
+              <%= f.select :affiliation_instruction, ['上長2'], {include_blank: false, selected: '申請中' }, class: 'sample' %>
+            <% elsif @user.name == "上長2" %>
+              <%= f.select :affiliation_instruction, ['上長1'], {include_blank: false, selected: '申請中' }, class: 'sample' %>
+            <% else %>
+              <%= f.select :affiliation_instruction, ['上長1', '上長2'], {include_blank: false, selected: '申請中' }, class: 'sample' %>
+            <% end %></br>
             <%= f.hidden_field :affiliation_status, :value => "申請中" %>
             <%= f.submit "申請", class: "btn btn-block btn-primary" %>
           </td>

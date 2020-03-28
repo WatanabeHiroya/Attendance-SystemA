@@ -1,6 +1,6 @@
 require 'csv'
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info, :show_apply_affiliation, :show_changed_request, :show_overtime_request]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info]
   before_action :set_one_month, only: :show
@@ -112,7 +112,11 @@ class UsersController < ApplicationController
   
   # 所属長申請のお知らせ
   def show_apply_affiliation
-    @affiliation_attendances = Attendance.where(affiliation_status: "申請中").where(affiliation_instruction: "上長1")
+    if @user.name == "上長1"
+      @affiliation_attendances = Attendance.where(affiliation_status: "申請中").where(affiliation_instruction: "上長1")
+    elsif @user.name == "上長2"
+      @affiliation_attendances = Attendance.where(affiliation_status: "申請中").where(affiliation_instruction: "上長2")
+    end
     @affiliation_users = []
     @affiliation_attendances.each do |attendance|
       @affiliation_users.push(User.find_by(id: attendance.user_id))
@@ -122,7 +126,11 @@ class UsersController < ApplicationController
   
   # 勤怠変更申請のお知らせ
   def show_changed_request
-    @change_attendances = Attendance.where(status: "申請中").where(instruction: "上長1")
+    if @user.name == "上長1"
+      @change_attendances = Attendance.where(status: "申請中").where(instruction: "上長1")
+    elsif @user.name == "上長2"
+      @change_attendances = Attendance.where(status: "申請中").where(instruction: "上長2")
+    end
     @change_users = []    
     @change_attendances.each do |change_attendance|
       @change_users.push(User.find_by(id: change_attendance.user_id))
@@ -132,7 +140,11 @@ class UsersController < ApplicationController
   
   # 残業申請のお知らせ
   def show_overtime_request
-    @overtime_attendances = Attendance.where(overtime_status: "申請中").where(overtime_instruction: "上長1")
+    if @user.name == "上長1"
+      @overtime_attendances = Attendance.where(overtime_status: "申請中").where(overtime_instruction: "上長1")
+    elsif @user.name == "上長2"
+      @overtime_attendances = Attendance.where(overtime_status: "申請中").where(overtime_instruction: "上長2")
+    end
     @overtime_users = []
     @overtime_attendances.each do |attendance|
       @overtime_users.push(User.find_by(id: attendance.user_id))
