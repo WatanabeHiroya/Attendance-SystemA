@@ -30,7 +30,6 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # 
   def before_new
     if logged_in?
       flash[:info] = "すでにログインしています。"
@@ -45,7 +44,18 @@ class ApplicationController < ActionController::Base
 
   # システム管理権限所有かどうか判定します。
   def admin_user
-    redirect_to root_url unless current_user.admin?
+   unless current_user.admin?
+     flash[:danger] = "権限がありません。"
+     redirect_to root_url
+   end
+  end
+  
+  # 管理者のみ制限
+  def not_admin_user
+    if current_user.admin?
+      flash[:danger] = "権限がありません。"
+      redirect_to root_url
+    end
   end
 
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。

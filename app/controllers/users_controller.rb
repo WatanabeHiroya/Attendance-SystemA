@@ -1,11 +1,13 @@
 require 'csv'
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info,
+                                  :show_apply_affiliation, :show_changed_request, :show_overtime_request]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
-  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info]
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info, :working_employee_list]
   before_action :set_one_month, only: :show
   before_action :admin_or_correct_user, only: [:show, :edit, :update]
   before_action :three_notices, only: :show
+  before_action :not_admin_user, only: :show
   
   def index
     @users = User.paginate(page: params[:page], per_page: 10)

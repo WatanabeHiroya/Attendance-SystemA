@@ -1,4 +1,5 @@
 class BasesController < ApplicationController
+  before_action :admin_user, only: [:index, :edit, :update, :destroy, :new, :create]
   
   def index
     @bases = Base.all
