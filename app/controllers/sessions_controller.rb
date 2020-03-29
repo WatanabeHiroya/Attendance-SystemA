@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       log_in user
       params[:session][:remember_me] == '1'? remember(user) : forget(user)
       if user.admin == true
-        redirect_back_or users_url
+        redirect_back_or root_url
       else
         redirect_back_or user
       end

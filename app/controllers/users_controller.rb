@@ -1,14 +1,12 @@
 require 'csv'
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info, :show_apply_affiliation, :show_changed_request, :show_overtime_request]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_user_info]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :index, :update_user_info]
   before_action :set_one_month, only: :show
   before_action :admin_or_correct_user, only: [:show, :edit, :update]
-  before_action :show_apply_affiliation, only: :show
-  before_action :show_changed_request, only: :show
-  before_action :show_overtime_request, only: :show
-
+  before_action :three_notices, only: :show
+  
   def index
     @users = User.paginate(page: params[:page], per_page: 10)
   end
@@ -108,6 +106,15 @@ class UsersController < ApplicationController
   
   def working_employee_list
     @users = User.all.includes(:attendances)
+  end
+  
+  # お知らせ3アクション
+  def three_notices
+    if @user.superior == true
+      show_apply_affiliation
+      show_changed_request
+      show_overtime_request
+    end
   end
   
   # 所属長申請のお知らせ
