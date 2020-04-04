@@ -7,7 +7,7 @@
       <div class="modal-body">
         <% @overtime_users.each do |user| %>
           <h1>【<%= user.name %>からの残業申請】</h1>
-          <table class="table table-bordered table-condensed">
+          <table class="table table-bordered table-condensed" id="table-attendances">
             <tr>
               <th>日付</th>
               <th>曜日</th>

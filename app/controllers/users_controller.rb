@@ -34,10 +34,14 @@ class UsersController < ApplicationController
         values = [
           attendance.worked_on,
           if attendance.started_at.present?
-           attendance.started_at.strftime("%R")
+            unless attendance.status == "申請中"
+              attendance.started_at.strftime("%R")
+            end
           end,
           if attendance.finished_at.present?
-           attendance.finished_at.strftime("%R") 
+            unless attendance.status == "申請中"
+              attendance.finished_at.strftime("%R") 
+            end
           end
           ]
         csv << values
