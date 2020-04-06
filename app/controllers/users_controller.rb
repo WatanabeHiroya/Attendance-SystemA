@@ -181,7 +181,7 @@ class UsersController < ApplicationController
     end
 
     def import_users
-    # ActiveRecord::Base.transaction do # トランザクション
+     ActiveRecord::Base.transaction do # トランザクション
         # 登録処理前のレコード数
         current_user_count = ::User.count
         users = []
@@ -193,10 +193,10 @@ class UsersController < ApplicationController
         ::User.import(users)
         # 何レコード登録できたかを返す
         ::User.count - current_user_count
-    #  end
-    # rescue ActiveRecord::RecordNotUnique # トランザクションにエラー
-    #  flash[:danger] = "無効な入力データがあった為、キャンセルしました。"
-    #  redirect_to users_url
+      end
+     rescue ActiveRecord::RecordNotUnique # トランザクションにエラー
+      flash[:danger] = "無効な入力データがあった為、キャンセルしました。"
+      redirect_to users_url
     end
 
 end
