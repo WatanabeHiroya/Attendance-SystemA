@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   def create
     if params[:users_file]
       registered_count = import_users
-      flash[:success] = "#{registered_count}件登録しました。"
+      flash[:success] = "#{registered_count}件登録しました。" if registered_count.to_i >= 1
       redirect_to users_url
     else
       @user = User.new(user_params)
@@ -194,9 +194,8 @@ class UsersController < ApplicationController
         # 何レコード登録できたかを返す
         ::User.count - current_user_count
       end
-     rescue ActiveRecord::RecordNotUnique # トランザクションにエラー
+     rescue ActiveRecord::RecordNotUnique# トランザクションにエラー
       flash[:danger] = "無効な入力データがあった為、キャンセルしました。"
-      redirect_to users_url
     end
 
 end
