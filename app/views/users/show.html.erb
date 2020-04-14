@@ -173,7 +173,7 @@
           <td rowspan="2">
             <% if current_user?(@user) %>
               所属長承認：<% if @attendance.affiliation_status.present? %>
-                            <%= @attendance.affiliation_status %>
+                            <%= @attendance.affiliation_instruction %><%= @attendance.affiliation_status %>
                           <% else %>
                             未
                           <% end %></br>
