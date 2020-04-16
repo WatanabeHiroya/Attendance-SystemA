@@ -28,11 +28,11 @@
     <ul class="users-list">
       <% @users.each do |user| %>
         <li><%= user.name %>
-        <li>|
-          <%= link_to "削除", user, method: :delete,
-              data: { confirm: "削除してよろしいですか？" },
-              class: "btn btn-primary" %>
-        </li>
+          <% if user.admin == false %>
+            <li>|
+              <%= link_to "削除", user, method: :delete, data: { confirm: "削除してよろしいですか？" }, class: "btn btn-primary" %>
+            </li>
+          <% end %>
           <div class="panel-group" id="accordion">
             <div class="panel panel-default">
               <div class="panel-heading">
