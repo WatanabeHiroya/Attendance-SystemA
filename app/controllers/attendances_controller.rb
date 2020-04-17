@@ -95,7 +95,7 @@ class AttendancesController < ApplicationController
   def approve_overtime_request
     approve_overtime_params.each do |id, item|
       attendance = Attendance.find(id)
-      attendance.update_attributes(item)
+      attendance.update_attributes(item) if params[:check] == "1"
     end
     flash[:info] = "残業申請を更新しました。"
     redirect_to user_url
