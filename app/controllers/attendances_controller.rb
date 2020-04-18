@@ -61,9 +61,9 @@ class AttendancesController < ApplicationController
   
   # 勤怠変更申請承認
   def approve_changed_request
-    approve_attendances_params.each do |id, status|
+    approve_attendances_params.each do |id, item|
       attendance = Attendance.find(id)
-      attendance.update_attributes(status)
+      attendance.update_attributes(item) if item[:check] == "1"
     end
     flash[:info] = "勤怠変更申請を更新しました。"
     redirect_to user_url
@@ -95,7 +95,7 @@ class AttendancesController < ApplicationController
   def approve_overtime_request
     approve_overtime_params.each do |id, item|
       attendance = Attendance.find(id)
-      attendance.update_attributes(item) if item[:overtime_change_check_box] == "1"
+      attendance.update_attributes(item) if item[:check] == "1"
     end
     flash[:info] = "残業申請を更新しました。"
     redirect_to user_url
@@ -114,7 +114,7 @@ class AttendancesController < ApplicationController
   def approve_affiliation
     approve_affiliation_params.each do |id, item|
       attendance = Attendance.find(id)
-      attendance.update_attributes(item)
+      attendance.update_attributes(item) if item[:check] == "1"
     end
     flash[:info] = "所属長承認申請を更新しました。"
     redirect_to user_url
@@ -132,7 +132,7 @@ class AttendancesController < ApplicationController
     # 勤怠変更申請承認
     def approve_attendances_params
     # require(:attendance)は必要ない？
-      params.permit(attendances: [:status])[:attendances]
+      params.permit(attendances: [:status, :check])[:attendances]
     end
     
     # 残業申請情報
@@ -142,7 +142,7 @@ class AttendancesController < ApplicationController
     
     # 残業申請承認
     def approve_overtime_params
-      params.permit(attendances: [:overtime_status, :overtime_change_check_box])[:attendances]
+      params.permit(attendances: [:overtime_status, :check])[:attendances]
     end
     
     # 所属長申請
@@ -152,6 +152,6 @@ class AttendancesController < ApplicationController
     
     # 所属長承認
     def approve_affiliation_params
-      params.permit(attendances: [:affiliation_status])[:attendances]
+      params.permit(attendances: [:affiliation_status, :check])[:attendances]
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200321061924) do
+ActiveRecord::Schema.define(version: 20200418091443) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -27,16 +27,14 @@ ActiveRecord::Schema.define(version: 20200321061924) do
     t.datetime "second_end_time"
     t.string "instruction"
     t.string "status"
-    t.string "change_check_box"
     t.datetime "overtime_finished_at"
     t.string "overtime_content"
     t.string "overtime_instruction"
     t.string "overtime_next_day_flag"
     t.string "overtime_status"
-    t.string "overtime_change_check_box"
     t.string "affiliation_status"
     t.string "affiliation_instruction"
-    t.string "affiliation_change_check_box"
+    t.string "check"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
@@ -57,14 +55,14 @@ ActiveRecord::Schema.define(version: 20200321061924) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-    t.datetime "basic_time", default: "2020-04-15 23:00:00"
-    t.datetime "work_time", default: "2020-04-15 22:30:00"
+    t.datetime "basic_time", default: "2020-04-17 23:00:00"
+    t.datetime "work_time", default: "2020-04-17 22:30:00"
     t.integer "employee_number"
     t.string "affiliation"
     t.string "uid"
-    t.datetime "basic_work_time", default: "2020-04-15 23:00:00"
-    t.datetime "designated_work_start_time", default: "2020-04-16 00:00:00"
-    t.datetime "designated_work_end_time", default: "2020-04-16 09:00:00"
+    t.datetime "basic_work_time", default: "2020-04-17 23:00:00"
+    t.datetime "designated_work_start_time", default: "2020-04-18 00:00:00"
+    t.datetime "designated_work_end_time", default: "2020-04-18 09:00:00"
     t.boolean "superior", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
