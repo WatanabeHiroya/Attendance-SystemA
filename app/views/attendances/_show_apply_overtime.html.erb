@@ -26,11 +26,11 @@
             <td><%= f.text_field :overtime_content, class: "form-control" %></td>
             <td>
               <% if @user.name == "上長1" %>
-                <%= f.select :overtime_instruction,['上長2'],{include_blank: ''}, class: 'sample' %>
+                <%= f.select :overtime_instruction,['上長2'],{include_blank: false, selected: '上長2'}, class: 'sample' %>
               <% elsif @user.name == "上長2" %>
-                <%= f.select :overtime_instruction,['上長1'],{include_blank: ''}, class: 'sample' %>
+                <%= f.select :overtime_instruction,['上長1'],{include_blank: false, selected: '上長1'}, class: 'sample' %>
               <% else %>
-                <%= f.select :overtime_instruction,['上長1', '上長2'],{include_blank: ''}, class: 'sample' %>
+                <%= f.select :overtime_instruction,['上長1', '上長2'],{include_blank:false, selected: '上長1'}, class: 'sample' %>
               <% end %>
             </td>
             </tr>
