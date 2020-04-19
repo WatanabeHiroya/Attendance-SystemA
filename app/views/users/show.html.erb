@@ -96,8 +96,10 @@
         <% @attendances.each do |attendance| %>
           <tr>
             <td>
-              <% if current_user?(@user) %>
-                <%= link_to "残業申請", attendances_show_apply_overtime_user_path(attendance), remote: true, class: "btn btn-primary" %>
+              <% if (Date.current < attendance.worked_on) %>
+                <%= link_to "残業申請", attendances_show_apply_overtime_user_path(attendance), remote: true,  class: "btn btn-primary disabled" if current_user?(@user) %>
+              <% else %>
+                <%= link_to "残業申請", attendances_show_apply_overtime_user_path(attendance), remote: true, class: "btn btn-primary" if current_user?(@user) %>
               <% end %>
             </td>
             <td><%= l(attendance.worked_on, format: :short) %></td>
