@@ -22,6 +22,8 @@ class Attendance < ApplicationRecord
   end
   
   def apply_overtime
-    errors.add(:designated_work_end_time, "より早い終了予定時間は無効です。") if designated_work_end_time > overtime_finished_at
+    if overtime_finished_at.present?
+      errors.add('designated_work_end_time', "より早い終了予定時間は無効です。") if user.designated_work_end_time.strftime("%H:%M") > overtime_finished_at.strftime("%H:%M")
+    end
   end
 end

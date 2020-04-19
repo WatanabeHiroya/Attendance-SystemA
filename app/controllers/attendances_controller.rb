@@ -84,11 +84,17 @@ class AttendancesController < ApplicationController
   def apply_overtime
     show_apply_overtime
     if @attendance.finished_at.present?
-      @attendance.update_attributes(overtime_params)
-      unless @attendance.overtime_instruction == "" 
-        @attendance.update_attributes(overtime_status: "申請中")
-        flash[:success] = "残業申請を送信しました。"
+      if @attendance.update_attributes(overtime_params)
+        unless @attendance.overtime_instruction == "" 
+          @attendance.update_attributes(overtime_status: "申請中")
+          flash[:success] = "残業申請を送信しました。"
+          redirect_to user_url(@attendance.user_id)
+          return
+        end
+      else         
+        flash[:danger] = "指定勤務終了時間より早い終了予定時間は無効です。"
         redirect_to user_url(@attendance.user_id)
+        return
       end
     end
     flash[:danger] = "退社時間が未入力です。"
