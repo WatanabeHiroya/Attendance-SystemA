@@ -40,11 +40,9 @@ class AttendancesController < ApplicationController
       if attendances_invalid? # 出社時間、退社時間のどちらか一方が空の時、falseを返す。
         attendances_params.each do |id, item|
           attendance = Attendance.find(id)
-          attendance.update_attributes!(item)
-          attendance.update_attributes!(second_start_time: attendance.started_at, second_end_time: attendance.finished_at)
-          # 指示者を選択した勤怠情報のみ、statusを申請中に更新
-          unless attendance.instruction == "" 
-            attendance.update_attributes!(status: "申請中")
+          unless item[:instruction] == ""
+            attendance.update_attributes!(item)
+            attendance.update_attributes!(second_start_time: attendance.started_at, second_end_time: attendance.finished_at, status: "申請中")
           end
         end
         flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
@@ -53,6 +51,7 @@ class AttendancesController < ApplicationController
         flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
         redirect_to attendances_edit_one_month_user_url(date: params[:date])
       end
+      
     end        
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
       flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
