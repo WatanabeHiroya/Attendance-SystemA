@@ -20,7 +20,7 @@
                 <%= fields_for "attendances[]", attendance do |af| %>
                   <tr>
                     <td><%= l(attendance.worked_on, format: :month) %></td>
-                    <td><%= af.select :affiliation_status, ['なし', '申請中', '承認', '否認'], {include_blank: false, selected: '申請中' }, class: 'sample' %></td>
+                    <td><%= af.select :affiliation_status, ['', '申請中', '承認', '否認'], {include_blank: false, selected: '申請中' }, class: 'sample' %></td>
                     <td><%= af.check_box(:check, { :checked => false }, "1", "0") %></td>
                     <td><%= link_to "確認", user_path(id: user.id, date: attendance.worked_on.beginning_of_month), class: "btn btn-lg btn-primary" %></td>
                   </tr>
