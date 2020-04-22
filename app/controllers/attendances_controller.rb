@@ -60,12 +60,19 @@ class AttendancesController < ApplicationController
   
   # 勤怠変更申請承認
   def approve_changed_request
+    items = []
     approve_attendances_params.each do |id, item|
       attendance = Attendance.find(id)
       attendance.update_attributes(item) if item[:check] == "1"
+      items << item[:check]
     end
-    flash[:info] = "勤怠変更申請を更新しました。"
-    redirect_to user_url
+    if items.all?{|i| i == "0"}
+      flash[:danger] = "勤怠変更申請の更新ができませんでした。</br>※変更チェックボックスが選択されていません。"
+      redirect_to user_url
+    else
+      flash[:success] = "勤怠変更申請を更新しました。</br>※変更にチェックがない申請は更新されていません。"
+      redirect_to user_url
+    end
   end
   
   def fix_log
