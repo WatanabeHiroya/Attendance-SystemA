@@ -43,11 +43,11 @@
               <td><%= attendance.text_field :note, class: "form-control" %></td>
               <td>
                 <% if @user.name == "上長1" %>
-                  <%= attendance.select :instruction,['上長2'],{include_blank: ''}, class: 'sample' %>
+                  <%= attendance.select :instruction, options_for_select({上長2: '上長2'}, ''), include_blank: true, class: 'sample' %>
                 <% elsif @user.name == "上長2" %>
-                  <%= attendance.select :instruction,['上長1'],{include_blank: ''}, class: 'sample' %>
+                  <%= attendance.select :instruction, options_for_select({上長1: '上長1'}, ''), include_blank: true, class: 'sample' %>
                 <% else %>
-                  <%= attendance.select :instruction,['上長1', '上長2'],{include_blank: ''}, class: 'sample' %>
+                  <%= attendance.select :instruction, options_for_select({上長1: '上長1', 上長2: '上長2'}, ''), include_blank: true, class: 'sample' %>
                 <% end %>
               </td>
             </tr>

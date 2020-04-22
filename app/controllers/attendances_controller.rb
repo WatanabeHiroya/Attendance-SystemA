@@ -45,7 +45,7 @@ class AttendancesController < ApplicationController
             attendance.update_attributes!(second_start_time: attendance.started_at, second_end_time: attendance.finished_at, status: "申請中")
           end
         end
-        flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
+        flash[:success] = "1ヶ月分の勤怠情報を更新しました。</br>※上長が未選択のものは更新されません。"
         redirect_to user_url(date: params[:date])
       else
         flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
