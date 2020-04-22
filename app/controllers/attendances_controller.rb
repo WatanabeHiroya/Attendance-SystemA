@@ -102,12 +102,19 @@ class AttendancesController < ApplicationController
   
   # 残業承認
   def approve_overtime_request
+    items = []
     approve_overtime_params.each do |id, item|
       attendance = Attendance.find(id)
       attendance.update_attributes(item) if item[:check] == "1"
+      items << item[:check]
     end
-    flash[:info] = "残業申請を更新しました。"
-    redirect_to user_url
+    if items.all?{|i| i == "0"}
+      flash[:danger] = "残業申請の更新ができませんでした。</br>※変更チェックボックスが選択されていません。"
+      redirect_to user_url
+    else
+      flash[:success] = "残業申請を更新しました。</br>※変更にチェックがない申請は更新されていません。"
+      redirect_to user_url
+    end
   end
   
   # 所属長承認申請
@@ -121,12 +128,19 @@ class AttendancesController < ApplicationController
   
   # 所属長承認申請承認
   def approve_affiliation
+    items = []
     approve_affiliation_params.each do |id, item|
       attendance = Attendance.find(id)
       attendance.update_attributes(item) if item[:check] == "1"
+      items << item[:check]
     end
-    flash[:info] = "所属長承認申請を更新しました。"
-    redirect_to user_url
+    if items.all?{|i| i == "0"}
+      flash[:danger] = "所属長承認申請の更新ができませんでした。</br>※変更チェックボックスが選択されていません。"
+      redirect_to user_url
+    else
+      flash[:success] = "所属長承認申請を更新しました。</br>※変更にチェックがない申請は更新されていません。"
+      redirect_to user_url
+    end
   end
   
   

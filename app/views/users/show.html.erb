@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
-<%= form_with(model: @attendance, url: attendances_apply_affiliation_user_path(@user), local: true, method: :patch) do |f| %>
+<%= form_with(model: @attendance, url: attendances_apply_affiliation_user_path(@user, date: @first_day), local: true, method: :patch) do |f| %>
 <div class="container">
   <div>
     <table class="table table-bordered table-condensed user-table">
@@ -33,7 +33,7 @@
   <% if @user.superior? %>
     <% if @affiliation_users.present? %>
       <div><%= link_to "【所属長承認申請のお知らせ】", show_apply_affiliation_user_path(@user), remote: true, class: "link" %>
-        <span class="notification"><%= @affiliation_users.count %>件の通知があります</span>
+        <span class="notification"><%= @affiliation_attendances.count %>件の通知があります</span>
       </div>
     <% else %>
       <div>【所属長承認申請のお知らせ】</div>
