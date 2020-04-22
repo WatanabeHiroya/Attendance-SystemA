@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <% @change_users.each do |change_user| %>
-          <p class="center">【<%= change_user.name%>からの勤怠変更申請】</p>
+          <h1>【<%= change_user.name%>からの勤怠変更申請】</h1>
           <table class="table table-bordered table-condensed" id="table-attendances">
             <tr>
               <th rowspan="3">日付</th>
@@ -83,7 +83,7 @@
         <% end %>
         </div>
       <div class="modal-footer">
-        <td><%= f.submit "変更を送信する", class: "btn btn-lg btn-primary" %></td>
+        <td><%= f.submit "変更を送信する", class: "btn btn-block btn-primary" %></td>
       </div>
     </div>
   <% end %>

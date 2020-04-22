@@ -187,7 +187,12 @@
                 <%= f.select :affiliation_instruction, ['上長1', '上長2'], {include_blank: false, selected: '申請中' }, class: 'sample' %>
               <% end %></br>
               <%= f.hidden_field :affiliation_status, :value => "申請中" %>
-              <%= f.submit "申請", class: "btn btn-block btn-primary" %>
+              
+              <% if (Date.current <= @attendance.worked_on) %>
+                <%= f.submit "申請", class: "btn btn-block btn-primary", disabled: true %>
+              <% else %>
+                <%= f.submit "申請", class: "btn btn-block btn-primary" %>
+              <% end %>
             <% end %>
           </td>
         </tr>
